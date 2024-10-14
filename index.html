@@ -10,8 +10,10 @@
     <div class="container">
         <h1>Ugly Photo Gallery</h1>
         <div class="upload-section">
-            <label for="photoUpload" class="upload-btn">Upload Your Ugly Photo</label>
-            <input type="file" id="photoUpload" accept="image/*" hidden>
+            <input type="text" id="caption" placeholder="Enter caption (optional)" />
+            <label for="photo" class="upload-btn">Upload Your Ugly Photo</label>
+            <input type="file" id="photo" accept="image/*" hidden>
+            <button id="uploadButton">Submit</button>
         </div>
         <div class="gallery" id="photoGallery"></div>
     </div>

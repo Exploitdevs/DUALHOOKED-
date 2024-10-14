@@ -1,11 +1,10 @@
-// Variable to store the selected photo
 let selectedPhoto;
 
-// Function to handle file upload
+// Handle file selection
 document.getElementById('photo').addEventListener('change', function () {
     const photoInput = this;
     if (photoInput.files.length === 0) {
-        return;
+        return; // Exit if no file is selected
     }
 
     const reader = new FileReader();
@@ -15,82 +14,66 @@ document.getElementById('photo').addEventListener('change', function () {
             caption: "Ugly Pic", // Default caption
         };
 
-        // Show confirmation pop-up
         showPopup("Do you want to upload this picture to the website?");
     };
 
     reader.readAsDataURL(photoInput.files[0]);
 });
 
-// Function to show confirmation pop-up
+// Show confirmation popup
 function showPopup(message) {
     document.getElementById('popupMessage').innerText = message;
     document.getElementById('overlay').style.display = 'flex';
 }
 
-// Function to confirm upload
+// Confirm upload
 document.getElementById('confirmUpload').addEventListener('click', function () {
-    // Save photo to local storage
     const photos = JSON.parse(localStorage.getItem('photos')) || [];
     photos.push(selectedPhoto);
     localStorage.setItem('photos', JSON.stringify(photos));
-
-    // Hide the pop-up and show the gallery
     document.getElementById('overlay').style.display = 'none';
     showGallery();
 });
 
-// Function to cancel upload
+// Cancel upload
 document.getElementById('cancelUpload').addEventListener('click', function () {
-    document.getElementById('overlay').style.display = 'none'; // Hide pop-up
+    document.getElementById('overlay').style.display = 'none';
 });
 
-// Function to show the photo gallery
+// Show gallery
 function showGallery() {
-    // Clear upload section
     document.getElementById('uploadContainer').style.display = 'none';
-
     const gallery = document.getElementById('photoGallery');
-    gallery.innerHTML = ''; // Clear the gallery
-
+    gallery.innerHTML = ''; // Clear previous photos
     const photos = JSON.parse(localStorage.getItem('photos')) || [];
-    
-    // Create photo panels for each uploaded photo
-    photos.forEach(photo => addPhotoToGallery(photo));
 
-    // Display the gallery with animations
-    gallery.style.display = 'grid';
-    gallery.style.opacity = 1;
+    photos.forEach(photo => {
+        const photoPanel = document.createElement('div');
+        photoPanel.classList.add('photo-panel');
+        
+        const imgElement = document.createElement('img');
+        imgElement.src = photo.url;
 
-    // Trigger fade-in effect for the gallery
+        const caption = document.createElement('div');
+        caption.classList.add('caption');
+        caption.innerText = photo.caption;
+
+        photoPanel.appendChild(imgElement);
+        photoPanel.appendChild(caption);
+        gallery.appendChild(photoPanel);
+    });
+
+    // Fade-in effect for gallery
     setTimeout(() => {
+        gallery.style.display = 'grid';
+        gallery.style.opacity = 1;
+
+        // Show each photo with a fade-in effect
         gallery.querySelectorAll('.photo-panel').forEach((panel, index) => {
             panel.style.opacity = 1;
             panel.style.transitionDelay = `${index * 0.1}s`;
-            panel.classList.add('fade-in');
         });
     }, 100);
-}
-
-// Function to add photo to the gallery
-function addPhotoToGallery(photo) {
-    const gallery = document.getElementById('photoGallery');
-
-    const photoPanel = document.createElement('div');
-    photoPanel.classList.add('photo-panel');
-
-    const imgElement = document.createElement('img');
-    imgElement.src = photo.url;
-
-    const caption = document.createElement('div');
-    caption.classList.add('caption');
-    caption.innerText = photo.caption;
-
-    photoPanel.appendChild(imgElement);
-    photoPanel.appendChild(caption);
-
-    // Add photo panel to gallery
-    gallery.appendChild(photoPanel);
 }
 
 // Show gallery button event listener

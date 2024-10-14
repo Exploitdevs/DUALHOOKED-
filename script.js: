@@ -1,82 +1,56 @@
-let selectedPhoto;
+// Predefined images (you can replace these with your images)
+const images = [
+    { url: 'path/to/your/image1.jpg', caption: 'Ugly Pic 1' },
+    { url: 'path/to/your/image2.jpg', caption: 'Ugly Pic 2' },
+    { url: 'path/to/your/image3.jpg', caption: 'Ugly Pic 3' },
+];
 
-// Handle file selection
-document.getElementById('photo').addEventListener('change', function () {
-    const photoInput = this;
-    if (photoInput.files.length === 0) {
-        return; // Exit if no file is selected
-    }
+const mainContainer = document.getElementById('mainContainer');
+const photoGallery = document.getElementById('photoGallery');
+const showGalleryButton = document.getElementById('showGalleryButton');
 
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        selectedPhoto = {
-            url: e.target.result,
-            caption: "Ugly Pic", // Default caption
-        };
-
-        showPopup("Do you want to upload this picture to the website?");
-    };
-
-    reader.readAsDataURL(photoInput.files[0]);
-});
-
-// Show confirmation popup
-function showPopup(message) {
-    document.getElementById('popupMessage').innerText = message;
-    document.getElementById('overlay').style.display = 'flex';
-}
-
-// Confirm upload
-document.getElementById('confirmUpload').addEventListener('click', function () {
-    // Instead of uploading, just confirm and show the gallery
-    showGallery();
-});
-
-// Cancel upload
-document.getElementById('cancelUpload').addEventListener('click', function () {
-    document.getElementById('overlay').style.display = 'none';
-});
-
-// Show gallery
+// Show gallery function
 function showGallery() {
-    // Clear the upload container
-    document.getElementById('uploadContainer').style.opacity = 0; // Fade out
-    document.getElementById('uploadContainer').style.transition = 'opacity 0.5s ease';
-    
-    // Wait for fade-out to complete
+    // Clear the main container
+    mainContainer.style.opacity = 0;
+    mainContainer.style.transition = 'opacity 0.5s ease';
+
+    // Wait for fade out to complete
     setTimeout(() => {
-        document.getElementById('uploadContainer').style.display = 'none'; // Hide the upload container
-        
-        const gallery = document.getElementById('photoGallery');
-        gallery.innerHTML = ''; // Clear previous photos
+        mainContainer.style.display = 'none'; // Hide main container
 
-        // Create a photo panel for the uploaded photo
-        const photoPanel = document.createElement('div');
-        photoPanel.classList.add('photo-panel');
+        // Show gallery
+        photoGallery.innerHTML = ''; // Clear previous photos
 
-        const imgElement = document.createElement('img');
-        imgElement.src = selectedPhoto.url;
+        // Build the gallery with images
+        images.forEach((image, index) => {
+            const photoPanel = document.createElement('div');
+            photoPanel.classList.add('photo-panel');
 
-        const caption = document.createElement('div');
-        caption.classList.add('caption');
-        caption.innerText = selectedPhoto.caption;
+            const imgElement = document.createElement('img');
+            imgElement.src = image.url;
 
-        photoPanel.appendChild(imgElement);
-        photoPanel.appendChild(caption);
-        gallery.appendChild(photoPanel);
+            const caption = document.createElement('div');
+            caption.classList.add('caption');
+            caption.innerText = image.caption;
 
-        // Fade-in effect for gallery
-        gallery.style.display = 'grid';
-        gallery.style.opacity = 0;
+            photoPanel.appendChild(imgElement);
+            photoPanel.appendChild(caption);
+            photoGallery.appendChild(photoPanel);
+
+            // Set timeout for build-up animation
+            setTimeout(() => {
+                photoPanel.style.opacity = 1; // Fade in
+            }, index * 200); // Delay for each image
+        });
+
+        // Fade in the gallery
+        photoGallery.style.display = 'grid';
         setTimeout(() => {
-            gallery.style.opacity = 1;
-            gallery.querySelectorAll('.photo-panel').forEach((panel, index) => {
-                panel.style.opacity = 1;
-                panel.style.transitionDelay = `${index * 0.1}s`;
-            });
+            photoGallery.style.opacity = 1;
         }, 100);
-    }, 500); // Wait for fade out to complete
+    }, 500); // Wait for fade out
 }
 
 // Show gallery button event listener
-document.getElementById('showGalleryButton').addEventListener('click', showGallery);
+showGalleryButton.addEventListener('click', showGallery);

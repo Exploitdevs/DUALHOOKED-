@@ -13,7 +13,7 @@ body {
     align-items: center;
     flex-direction: column;
     height: 100vh;
-    overflow: hidden; /* Prevent scrolling during animation */
+    overflow: hidden;
     transition: background-color 0.5s;
 }
 
@@ -28,31 +28,17 @@ h1 {
     margin-bottom: 20px;
 }
 
-.upload-section {
-    margin-bottom: 20px;
-}
-
-.upload-btn {
+button {
     background-color: #ff79c6;
-    padding: 10px 20px;
+    border: none;
     border-radius: 5px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.upload-btn:hover {
-    transform: scale(1.1);
-}
-
-#showGalleryButton {
-    background-color: #50fa7b;
     padding: 10px 20px;
-    border-radius: 5px;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-#showGalleryButton:hover {
+button:hover {
+    background-color: #ff3d87;
     transform: scale(1.1);
 }
 
@@ -69,8 +55,8 @@ h1 {
     position: relative;
     border-radius: 15px;
     overflow: hidden;
-    opacity: 0; /* Start with hidden */
-    transition: opacity 0.3s ease; /* Add fade-in effect */
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
 
 .photo-panel img {
@@ -114,16 +100,10 @@ h1 {
     text-align: center;
 }
 
-button {
+#confirmUpload, #cancelUpload {
     background-color: #50fa7b;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    margin: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
-button:hover {
+#confirmUpload:hover, #cancelUpload:hover {
     background-color: #3be64e;
 }

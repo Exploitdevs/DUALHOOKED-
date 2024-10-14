@@ -68,8 +68,8 @@ h1 {
     position: relative;
     border-radius: 15px;
     overflow: hidden;
-    transition: transform 0.3s;
-    opacity: 0;
+    opacity: 0; /* Start with hidden */
+    transition: opacity 0.3s ease; /* Add fade-in effect */
 }
 
 .photo-panel img {
@@ -93,30 +93,6 @@ h1 {
     text-align: center;
 }
 
-.fade-in {
-    animation: fadeIn 0.5s forwards;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes slideIn {
-    from {
-        transform: translateY(50px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
 .overlay {
     position: fixed;
     top: 0;
@@ -135,16 +111,6 @@ h1 {
     padding: 20px;
     border-radius: 10px;
     text-align: center;
-    animation: scaleUp 0.3s ease forwards;
-}
-
-@keyframes scaleUp {
-    from {
-        transform: scale(0);
-    }
-    to {
-        transform: scale(1);
-    }
 }
 
 button {

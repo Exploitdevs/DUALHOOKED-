@@ -26,12 +26,15 @@ document.getElementById('photo').addEventListener('change', function () {
 
 // Function to show the photo gallery
 function showGallery() {
+    // Clear upload section
+    document.getElementById('uploadContainer').style.display = 'none';
     const gallery = document.getElementById('photoGallery');
     gallery.innerHTML = ''; // Clear the gallery
 
     const photos = JSON.parse(localStorage.getItem('photos')) || [];
     photos.forEach(photo => addPhotoToGallery(photo));
 
+    gallery.style.display = 'grid';
     gallery.style.opacity = 1; // Fade in the gallery
 }
 
@@ -39,7 +42,9 @@ function showGallery() {
 function addPhotoToGallery(photo) {
     const gallery = document.getElementById('photoGallery');
 
-    const photoContainer = document.createElement('div');
+    const photoPanel = document.createElement('div');
+    photoPanel.classList.add('photo-panel', 'fade-in');
+
     const imgElement = document.createElement('img');
     imgElement.src = photo.url;
 
@@ -47,10 +52,10 @@ function addPhotoToGallery(photo) {
     caption.classList.add('caption');
     caption.innerText = photo.caption;
 
-    photoContainer.appendChild(imgElement);
-    photoContainer.appendChild(caption);
+    photoPanel.appendChild(imgElement);
+    photoPanel.appendChild(caption);
 
-    gallery.appendChild(photoContainer);
+    gallery.appendChild(photoPanel);
 }
 
 // Show gallery button event listener

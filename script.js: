@@ -1,3 +1,10 @@
+// Only you can upload images by replacing these URLs with your image URLs
+const myImages = [
+    { url: 'path/to/your/image1.jpg', caption: "Ugly Pic 1" },
+    { url: 'path/to/your/image2.jpg', caption: "Ugly Pic 2" },
+    // Add more images here as needed
+];
+
 let selectedPhoto;
 
 // Handle file selection
@@ -28,9 +35,8 @@ function showPopup(message) {
 
 // Confirm upload
 document.getElementById('confirmUpload').addEventListener('click', function () {
-    const photos = JSON.parse(localStorage.getItem('photos')) || [];
-    photos.push(selectedPhoto);
-    localStorage.setItem('photos', JSON.stringify(photos));
+    const photos = myImages; // Use the hardcoded array instead of localStorage
+    photos.push(selectedPhoto); // Optionally allow adding a photo temporarily for yourself
     document.getElementById('overlay').style.display = 'none';
     showGallery();
 });
@@ -45,12 +51,12 @@ function showGallery() {
     document.getElementById('uploadContainer').style.display = 'none';
     const gallery = document.getElementById('photoGallery');
     gallery.innerHTML = ''; // Clear previous photos
-    const photos = JSON.parse(localStorage.getItem('photos')) || [];
+    const photos = myImages; // Use the hardcoded array
 
     photos.forEach(photo => {
         const photoPanel = document.createElement('div');
         photoPanel.classList.add('photo-panel');
-        
+
         const imgElement = document.createElement('img');
         imgElement.src = photo.url;
 

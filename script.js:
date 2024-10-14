@@ -28,14 +28,28 @@ document.getElementById('photo').addEventListener('change', function () {
 function showGallery() {
     // Clear upload section
     document.getElementById('uploadContainer').style.display = 'none';
+
     const gallery = document.getElementById('photoGallery');
     gallery.innerHTML = ''; // Clear the gallery
 
     const photos = JSON.parse(localStorage.getItem('photos')) || [];
+    
+    // Create photo panels for each uploaded photo
     photos.forEach(photo => addPhotoToGallery(photo));
 
+    // Display the gallery with animations
     gallery.style.display = 'grid';
-    gallery.style.opacity = 1; // Fade in the gallery
+    gallery.style.opacity = 1;
+    gallery.style.transform = 'translateY(0)';
+    
+    // Trigger fade-in effect for the gallery
+    setTimeout(() => {
+        gallery.querySelectorAll('.photo-panel').forEach((panel, index) => {
+            panel.style.opacity = 1;
+            panel.style.transitionDelay = `${index * 0.1}s`;
+            panel.classList.add('fade-in');
+        });
+    }, 100);
 }
 
 // Function to add photo to the gallery
@@ -55,6 +69,7 @@ function addPhotoToGallery(photo) {
     photoPanel.appendChild(imgElement);
     photoPanel.appendChild(caption);
 
+    // Add photo panel to gallery
     gallery.appendChild(photoPanel);
 }
 

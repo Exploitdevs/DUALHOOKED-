@@ -1,16 +1,7 @@
-// Retrieve existing photos from local storage
-function loadPhotos() {
-    const photos = JSON.parse(localStorage.getItem('photos')) || [];
-    photos.forEach(photo => addPhotoToGallery(photo));
-}
-
-// Function to upload and display photo
-function uploadPhoto() {
-    const photoInput = document.getElementById('photo');
-    const captionInput = document.getElementById('caption');
-
+// Function to handle file upload
+document.getElementById('photo').addEventListener('change', function () {
+    const photoInput = this;
     if (photoInput.files.length === 0) {
-        alert('Please select a photo!');
         return;
     }
 
@@ -18,7 +9,7 @@ function uploadPhoto() {
     reader.onload = function (e) {
         const photo = {
             url: e.target.result,
-            caption: captionInput.value || "Ugly Pic",
+            caption: "Ugly Pic", // Default caption
         };
 
         // Save photo to local storage
@@ -26,14 +17,22 @@ function uploadPhoto() {
         photos.push(photo);
         localStorage.setItem('photos', JSON.stringify(photos));
 
-        // Add photo to the gallery
-        addPhotoToGallery(photo);
-
-        // Reset input fields
-        photoInput.value = '';
-        captionInput.value = '';
+        // Show the gallery after uploading
+        showGallery();
     };
+
     reader.readAsDataURL(photoInput.files[0]);
+});
+
+// Function to show the photo gallery
+function showGallery() {
+    const gallery = document.getElementById('photoGallery');
+    gallery.innerHTML = ''; // Clear the gallery
+
+    const photos = JSON.parse(localStorage.getItem('photos')) || [];
+    photos.forEach(photo => addPhotoToGallery(photo));
+
+    gallery.style.opacity = 1; // Fade in the gallery
 }
 
 // Function to add photo to the gallery
@@ -54,6 +53,5 @@ function addPhotoToGallery(photo) {
     gallery.appendChild(photoContainer);
 }
 
-// Event listeners
-document.getElementById('uploadButton').addEventListener('click', uploadPhoto);
-window.addEventListener('load', loadPhotos);
+// Show gallery button event listener
+document.getElementById('showGalleryButton').addEventListener('click', showGallery);

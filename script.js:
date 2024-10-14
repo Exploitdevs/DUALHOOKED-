@@ -1,10 +1,3 @@
-// Only you can upload images by replacing these URLs with your image URLs
-const myImages = [
-    { url: 'path/to/your/image1.jpg', caption: "Ugly Pic 1" },
-    { url: 'path/to/your/image2.jpg', caption: "Ugly Pic 2" },
-    // Add more images here as needed
-];
-
 let selectedPhoto;
 
 // Handle file selection
@@ -35,9 +28,7 @@ function showPopup(message) {
 
 // Confirm upload
 document.getElementById('confirmUpload').addEventListener('click', function () {
-    const photos = myImages; // Use the hardcoded array instead of localStorage
-    photos.push(selectedPhoto); // Optionally allow adding a photo temporarily for yourself
-    document.getElementById('overlay').style.display = 'none';
+    // Instead of uploading, just confirm and show the gallery
     showGallery();
 });
 
@@ -48,38 +39,43 @@ document.getElementById('cancelUpload').addEventListener('click', function () {
 
 // Show gallery
 function showGallery() {
-    document.getElementById('uploadContainer').style.display = 'none';
-    const gallery = document.getElementById('photoGallery');
-    gallery.innerHTML = ''; // Clear previous photos
-    const photos = myImages; // Use the hardcoded array
+    // Clear the upload container
+    document.getElementById('uploadContainer').style.opacity = 0; // Fade out
+    document.getElementById('uploadContainer').style.transition = 'opacity 0.5s ease';
+    
+    // Wait for fade-out to complete
+    setTimeout(() => {
+        document.getElementById('uploadContainer').style.display = 'none'; // Hide the upload container
+        
+        const gallery = document.getElementById('photoGallery');
+        gallery.innerHTML = ''; // Clear previous photos
 
-    photos.forEach(photo => {
+        // Create a photo panel for the uploaded photo
         const photoPanel = document.createElement('div');
         photoPanel.classList.add('photo-panel');
 
         const imgElement = document.createElement('img');
-        imgElement.src = photo.url;
+        imgElement.src = selectedPhoto.url;
 
         const caption = document.createElement('div');
         caption.classList.add('caption');
-        caption.innerText = photo.caption;
+        caption.innerText = selectedPhoto.caption;
 
         photoPanel.appendChild(imgElement);
         photoPanel.appendChild(caption);
         gallery.appendChild(photoPanel);
-    });
 
-    // Fade-in effect for gallery
-    setTimeout(() => {
+        // Fade-in effect for gallery
         gallery.style.display = 'grid';
-        gallery.style.opacity = 1;
-
-        // Show each photo with a fade-in effect
-        gallery.querySelectorAll('.photo-panel').forEach((panel, index) => {
-            panel.style.opacity = 1;
-            panel.style.transitionDelay = `${index * 0.1}s`;
-        });
-    }, 100);
+        gallery.style.opacity = 0;
+        setTimeout(() => {
+            gallery.style.opacity = 1;
+            gallery.querySelectorAll('.photo-panel').forEach((panel, index) => {
+                panel.style.opacity = 1;
+                panel.style.transitionDelay = `${index * 0.1}s`;
+            });
+        }, 100);
+    }, 500); // Wait for fade out to complete
 }
 
 // Show gallery button event listener

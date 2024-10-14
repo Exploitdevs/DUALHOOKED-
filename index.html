@@ -11,12 +11,20 @@
         <h1>Ugly Photo Gallery</h1>
         <div class="upload-section">
             <input type="file" id="photo" accept="image/*" hidden>
-            <label for="photo" class="upload-btn">Upload Your Ugly Photo</label>
+            <label for="photo" class="upload-btn">Choose Your Ugly Photo</label>
             <button id="showGalleryButton">Show Pictures</button>
         </div>
     </div>
 
     <div class="gallery" id="photoGallery" style="display: none;"></div>
+
+    <div class="overlay" id="overlay" style="display: none;">
+        <div class="popup">
+            <p id="popupMessage"></p>
+            <button id="confirmUpload">Yes</button>
+            <button id="cancelUpload">No</button>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

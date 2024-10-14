@@ -1,28 +1,23 @@
-const socket = io();
+document.getElementById('photoUpload').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const gallery = document.getElementById('photoGallery');
 
-document.getElementById('start-button').addEventListener('click', () => {
-    document.getElementById('quiz-container').style.display = 'block';
-    socket.emit('startQuiz');
-});
+            const photoContainer = document.createElement('div');
+            const imgElement = document.createElement('img');
+            imgElement.src = e.target.result;
 
-socket.on('loadQuestions', (questions) => {
-    const quizContainer = document.getElementById('quiz-container');
-    quizContainer.innerHTML = '';
-    questions.forEach((questionData, index) => {
-        const questionElement = document.createElement('div');
-        questionElement.className = 'question';
-        questionElement.innerHTML = `<p>${index + 1}. ${questionData.question}</p>`;
-        
-        const optionsElement = document.createElement('div');
-        optionsElement.className = 'options';
-        ['option1', 'option2', 'option3', 'option4'].forEach(option => {
-            const optionElement = document.createElement('div');
-            optionElement.className = 'option';
-            optionElement.innerText = questionData[option];
-            optionsElement.appendChild(optionElement);
-        });
-        
-        questionElement.appendChild(optionsElement);
-        quizContainer.appendChild(questionElement);
-    });
+            const caption = document.createElement('div');
+            caption.classList.add('caption');
+            caption.innerText = "Ugly Pic #" + (gallery.children.length + 1); // Adding humorous captions
+
+            photoContainer.appendChild(imgElement);
+            photoContainer.appendChild(caption);
+
+            gallery.appendChild(photoContainer);
+        };
+        reader.readAsDataURL(file);
+    }
 });

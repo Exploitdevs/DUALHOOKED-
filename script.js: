@@ -1,3 +1,6 @@
+// Variable to store the selected photo
+let selectedPhoto;
+
 // Function to handle file upload
 document.getElementById('photo').addEventListener('change', function () {
     const photoInput = this;
@@ -7,21 +10,39 @@ document.getElementById('photo').addEventListener('change', function () {
 
     const reader = new FileReader();
     reader.onload = function (e) {
-        const photo = {
+        selectedPhoto = {
             url: e.target.result,
             caption: "Ugly Pic", // Default caption
         };
 
-        // Save photo to local storage
-        const photos = JSON.parse(localStorage.getItem('photos')) || [];
-        photos.push(photo);
-        localStorage.setItem('photos', JSON.stringify(photos));
-
-        // Show the gallery after uploading
-        showGallery();
+        // Show confirmation pop-up
+        showPopup("Do you want to upload this picture to the website?");
     };
 
     reader.readAsDataURL(photoInput.files[0]);
+});
+
+// Function to show confirmation pop-up
+function showPopup(message) {
+    document.getElementById('popupMessage').innerText = message;
+    document.getElementById('overlay').style.display = 'flex';
+}
+
+// Function to confirm upload
+document.getElementById('confirmUpload').addEventListener('click', function () {
+    // Save photo to local storage
+    const photos = JSON.parse(localStorage.getItem('photos')) || [];
+    photos.push(selectedPhoto);
+    localStorage.setItem('photos', JSON.stringify(photos));
+
+    // Hide the pop-up and show the gallery
+    document.getElementById('overlay').style.display = 'none';
+    showGallery();
+});
+
+// Function to cancel upload
+document.getElementById('cancelUpload').addEventListener('click', function () {
+    document.getElementById('overlay').style.display = 'none'; // Hide pop-up
 });
 
 // Function to show the photo gallery
@@ -40,8 +61,7 @@ function showGallery() {
     // Display the gallery with animations
     gallery.style.display = 'grid';
     gallery.style.opacity = 1;
-    gallery.style.transform = 'translateY(0)';
-    
+
     // Trigger fade-in effect for the gallery
     setTimeout(() => {
         gallery.querySelectorAll('.photo-panel').forEach((panel, index) => {
@@ -57,7 +77,7 @@ function addPhotoToGallery(photo) {
     const gallery = document.getElementById('photoGallery');
 
     const photoPanel = document.createElement('div');
-    photoPanel.classList.add('photo-panel', 'fade-in');
+    photoPanel.classList.add('photo-panel');
 
     const imgElement = document.createElement('img');
     imgElement.src = photo.url;

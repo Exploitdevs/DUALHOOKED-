@@ -1,23 +1,59 @@
-document.getElementById('photoUpload').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const gallery = document.getElementById('photoGallery');
+// Retrieve existing photos from local storage
+function loadPhotos() {
+    const photos = JSON.parse(localStorage.getItem('photos')) || [];
+    photos.forEach(photo => addPhotoToGallery(photo));
+}
 
-            const photoContainer = document.createElement('div');
-            const imgElement = document.createElement('img');
-            imgElement.src = e.target.result;
+// Function to upload and display photo
+function uploadPhoto() {
+    const photoInput = document.getElementById('photo');
+    const captionInput = document.getElementById('caption');
 
-            const caption = document.createElement('div');
-            caption.classList.add('caption');
-            caption.innerText = "Ugly Pic #" + (gallery.children.length + 1); // Adding humorous captions
-
-            photoContainer.appendChild(imgElement);
-            photoContainer.appendChild(caption);
-
-            gallery.appendChild(photoContainer);
-        };
-        reader.readAsDataURL(file);
+    if (photoInput.files.length === 0) {
+        alert('Please select a photo!');
+        return;
     }
-});
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        const photo = {
+            url: e.target.result,
+            caption: captionInput.value || "Ugly Pic",
+        };
+
+        // Save photo to local storage
+        const photos = JSON.parse(localStorage.getItem('photos')) || [];
+        photos.push(photo);
+        localStorage.setItem('photos', JSON.stringify(photos));
+
+        // Add photo to the gallery
+        addPhotoToGallery(photo);
+
+        // Reset input fields
+        photoInput.value = '';
+        captionInput.value = '';
+    };
+    reader.readAsDataURL(photoInput.files[0]);
+}
+
+// Function to add photo to the gallery
+function addPhotoToGallery(photo) {
+    const gallery = document.getElementById('photoGallery');
+
+    const photoContainer = document.createElement('div');
+    const imgElement = document.createElement('img');
+    imgElement.src = photo.url;
+
+    const caption = document.createElement('div');
+    caption.classList.add('caption');
+    caption.innerText = photo.caption;
+
+    photoContainer.appendChild(imgElement);
+    photoContainer.appendChild(caption);
+
+    gallery.appendChild(photoContainer);
+}
+
+// Event listeners
+document.getElementById('uploadButton').addEventListener('click', uploadPhoto);
+window.addEventListener('load', loadPhotos);

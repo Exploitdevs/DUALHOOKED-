@@ -1,28 +1,36 @@
 document.getElementById("convertBtn").addEventListener("click", function() {
-    const inputCode = document.getElementById("inputCode").value;
+    const inputCode = document.getElementById("inputCode").value.trim();
     const inputLang = document.getElementById("inputLang").value;
     const outputLang = document.getElementById("outputLang").value;
+
+    if (!inputCode) {
+        alert("Please enter some code to convert.");
+        return;
+    }
 
     // Show loading animation
     const loading = document.getElementById("loading");
     loading.classList.remove("hidden");
 
-    // Call the convert function after a delay to simulate loading
+    // Simulate conversion processing time
     setTimeout(() => {
         const convertedCode = convertCode(inputLang, outputLang, inputCode);
         document.getElementById("outputCode").value = convertedCode;
 
         // Hide loading animation
         loading.classList.add("hidden");
-    }, 1000); // Simulating a 1-second loading time
+    }, 1000); // Simulated loading time
 });
 
-// A basic function to convert code between languages
+// Function to convert code between languages
 function convertCode(inputLang, outputLang, code) {
-    // Example: converting Python print to JavaScript console.log
+    // Example conversion logic
     if (inputLang === "python" && outputLang === "javascript") {
         return code.replace(/print\((.+?)\)/g, 'console.log($1);');
     }
+    if (inputLang === "javascript" && outputLang === "python") {
+        return code.replace(/console\.log\((.+?)\);/g, 'print($1)');
+    }
     // Add more conversion rules here
-    return `No conversion logic available for ${inputLang} to ${outputLang}.`;
+    return `Conversion from ${inputLang} to ${outputLang} is not yet implemented.`;
 }

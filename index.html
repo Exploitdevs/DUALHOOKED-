@@ -3,22 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ugly Photo Gallery</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Code Converter</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container" id="mainContainer">
-        <h1>Ugly Photo Gallery</h1>
-        <button id="showGalleryButton">Show Pictures</button>
-    </div>
-
-    <div class="gallery" id="photoGallery" style="display: none;"></div>
-
-    <div class="overlay" id="overlay" style="display: none;">
-        <div class="popup">
-            <p id="popupMessage"></p>
-            <button id="confirmUpload">Yes</button>
-            <button id="cancelUpload">No</button>
+    <div class="container">
+        <h1>Code Converter</h1>
+        <div class="input-output">
+            <div class="input-section">
+                <select id="inputLang" class="language-select">
+                    <option value="python">Python</option>
+                    <option value="javascript">JavaScript</option>
+                    <option value="html">HTML</option>
+                    <option value="lua">Lua</option>
+                    <option value="java">Java</option>
+                    <option value="csharp">C#</option>
+                    <option value="ruby">Ruby</option>
+                    <option value="go">Go</option>
+                    <option value="swift">Swift</option>
+                    <option value="binary">Binary</option>
+                </select>
+                <textarea id="inputCode" placeholder="Enter your code here..."></textarea>
+            </div>
+            <div class="convert-section">
+                <button id="convertBtn" class="convert-button">Convert</button>
+            </div>
+            <div class="output-section">
+                <select id="outputLang" class="language-select">
+                    <option value="python">Python</option>
+                    <option value="javascript">JavaScript</option>
+                    <option value="html">HTML</option>
+                    <option value="lua">Lua</option>
+                    <option value="java">Java</option>
+                    <option value="csharp">C#</option>
+                    <option value="ruby">Ruby</option>
+                    <option value="go">Go</option>
+                    <option value="swift">Swift</option>
+                    <option value="binary">Binary</option>
+                </select>
+                <textarea id="outputCode" placeholder="Converted code will appear here..." readonly></textarea>
+            </div>
         </div>
     </div>
 

@@ -11,11 +11,11 @@ body {
 }
 
 .container {
-    max-width: 900px;
+    max-width: 800px;
     margin: 50px auto;
     padding: 20px;
     background: white;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     transition: transform 0.3s ease-in-out;
 }
@@ -34,6 +34,12 @@ h1 {
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+
+.label {
+    margin: 10px 0;
+    font-weight: bold;
+    color: #555;
 }
 
 .language-select {
@@ -57,11 +63,12 @@ h1 {
     border-radius: 5px;
     border: 1px solid #ddd;
     font-size: 16px;
-    transition: border-color 0.3s;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .code-input:focus, .code-output:focus {
     border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
     outline: none;
 }
 
@@ -79,7 +86,7 @@ h1 {
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s, transform 0.3s;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .convert-button:hover {
@@ -93,4 +100,16 @@ h1 {
 
 .output-section {
     margin-top: 20px;
+}
+
+.loading {
+    display: none;
+    text-align: center;
+    font-size: 20px;
+    color: #007bff;
+    margin-top: 20px;
+}
+
+.hidden {
+    display: none;
 }

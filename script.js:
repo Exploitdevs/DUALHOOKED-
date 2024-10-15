@@ -3,19 +3,26 @@ document.getElementById("convertBtn").addEventListener("click", function() {
     const inputLang = document.getElementById("inputLang").value;
     const outputLang = document.getElementById("outputLang").value;
 
-    // Call the convert function
-    const convertedCode = convertCode(inputLang, outputLang, inputCode);
+    // Show loading animation
+    const loading = document.getElementById("loading");
+    loading.classList.remove("hidden");
 
-    // Display the converted code
-    document.getElementById("outputCode").value = convertedCode;
+    // Call the convert function after a delay to simulate loading
+    setTimeout(() => {
+        const convertedCode = convertCode(inputLang, outputLang, inputCode);
+        document.getElementById("outputCode").value = convertedCode;
+
+        // Hide loading animation
+        loading.classList.add("hidden");
+    }, 1000); // Simulating a 1-second loading time
 });
 
 // A basic function to convert code between languages
 function convertCode(inputLang, outputLang, code) {
     // Example: converting Python print to JavaScript console.log
     if (inputLang === "python" && outputLang === "javascript") {
-        return code.replace(/print\((.+?)\)/g, 'console.log($1)');
+        return code.replace(/print\((.+?)\)/g, 'console.log($1);');
     }
-    // You can add more conversion rules here
+    // Add more conversion rules here
     return `No conversion logic available for ${inputLang} to ${outputLang}.`;
 }

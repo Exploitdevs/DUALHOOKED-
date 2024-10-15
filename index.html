@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Code Converter</title>
+    <title>Professional Code Converter</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -12,6 +12,7 @@
         <div class="converter">
             <div class="input-output">
                 <div class="input-section">
+                    <label for="inputLang" class="label">Input Language:</label>
                     <select id="inputLang" class="language-select">
                         <option value="python">Python</option>
                         <option value="javascript">JavaScript</option>
@@ -30,6 +31,7 @@
                     <button id="convertBtn" class="convert-button">Convert</button>
                 </div>
                 <div class="output-section">
+                    <label for="outputLang" class="label">Output Language:</label>
                     <select id="outputLang" class="language-select">
                         <option value="python">Python</option>
                         <option value="javascript">JavaScript</option>
@@ -46,6 +48,7 @@
                 </div>
             </div>
         </div>
+        <div id="loading" class="loading hidden">Converting...</div>
     </div>
 
     <script src="script.js"></script>

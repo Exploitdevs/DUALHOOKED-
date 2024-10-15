@@ -3,60 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code Converter with Settings</title>
+    <title>Advanced Code Converter with Customizable Settings</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Code Converter</h1>
-        <div class="converter">
-            <div class="language-selection">
-                <div class="input-group">
-                    <label for="inputLang" class="label">Input Language:</label>
-                    <select id="inputLang" class="language-select">
-                        <option value="python">Python</option>
-                        <option value="javascript">JavaScript</option>
-                        <option value="html">HTML</option>
-                        <option value="lua">Lua</option>
-                        <option value="java">Java</option>
-                        <option value="csharp">C#</option>
-                        <option value="ruby">Ruby</option>
-                        <option value="go">Go</option>
-                        <option value="swift">Swift</option>
-                        <option value="binary">Binary</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label for="outputLang" class="label">Output Language:</label>
-                    <select id="outputLang" class="language-select">
-                        <option value="python">Python</option>
-                        <option value="javascript">JavaScript</option>
-                        <option value="html">HTML</option>
-                        <option value="lua">Lua</option>
-                        <option value="java">Java</option>
-                        <option value="csharp">C#</option>
-                        <option value="ruby">Ruby</option>
-                        <option value="go">Go</option>
-                        <option value="swift">Swift</option>
-                        <option value="binary">Binary</option>
-                    </select>
-                </div>
-            </div>
-            <textarea id="inputCode" placeholder="Enter your code here..." class="code-input"></textarea>
-            <div class="convert-section">
-                <button id="convertBtn" class="convert-button">Convert</button>
-            </div>
-            <textarea id="outputCode" placeholder="Converted code will appear here..." class="code-output" readonly></textarea>
-        </div>
-        <div class="settings">
-            <h3>Settings</h3>
+        <div class="settings-panel">
+            <h2>Settings</h2>
             <div class="setting-option">
-                <label for="animation">Toggle Animations:</label>
+                <label for="animationToggle">Toggle Animations:</label>
                 <input type="checkbox" id="animationToggle" checked>
             </div>
             <div class="setting-option">
                 <label for="textboxColor">Text Box Color:</label>
                 <input type="color" id="textboxColor" value="#2d2d2d">
+            </div>
+            <div class="setting-option">
+                <label for="textboxBorderColor">Text Box Animation Color:</label>
+                <input type="color" id="textboxBorderColor" value="#7a5cc1">
+            </div>
+            <div class="setting-option">
+                <label for="textboxHoverEffect">Enable Hover Effect:</label>
+                <input type="checkbox" id="textboxHoverEffect" checked>
+            </div>
+            <div class="setting-option">
+                <label for="fontSize">Text Box Font Size:</label>
+                <input type="range" id="fontSize" min="12" max="24" value="16">
+            </div>
+            <div class="setting-option">
+                <label for="themeSelect">Select Theme:</label>
+                <select id="themeSelect">
+                    <option value="dark">Dark</option>
+                    <option value="light">Light</option>
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <h1>Code Converter</h1>
+            <div class="converter">
+                <div class="language-selection">
+                    <div class="input-group">
+                        <label for="inputLang" class="label">Input Language:</label>
+                        <select id="inputLang" class="language-select">
+                            <option value="python">Python</option>
+                            <option value="javascript">JavaScript</option>
+                            <option value="html">HTML</option>
+                            <option value="lua">Lua</option>
+                            <option value="java">Java</option>
+                            <option value="csharp">C#</option>
+                            <option value="ruby">Ruby</option>
+                            <option value="go">Go</option>
+                            <option value="swift">Swift</option>
+                            <option value="binary">Binary</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="outputLang" class="label">Output Language:</label>
+                        <select id="outputLang" class="language-select">
+                            <option value="python">Python</option>
+                            <option value="javascript">JavaScript</option>
+                            <option value="html">HTML</option>
+                            <option value="lua">Lua</option>
+                            <option value="java">Java</option>
+                            <option value="csharp">C#</option>
+                            <option value="ruby">Ruby</option>
+                            <option value="go">Go</option>
+                            <option value="swift">Swift</option>
+                            <option value="binary">Binary</option>
+                        </select>
+                    </div>
+                </div>
+                <textarea id="inputCode" placeholder="Enter your code here..." class="code-input"></textarea>
+                <div class="convert-section">
+                    <button id="convertBtn" class="convert-button">Convert</button>
+                </div>
+                <textarea id="outputCode" placeholder="Converted code will appear here..." class="code-output" readonly></textarea>
             </div>
         </div>
         <div id="loading" class="loading hidden">Converting...</div>

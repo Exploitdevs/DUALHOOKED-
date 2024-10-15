@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code Converter</title>
+    <title>Code Converter with Settings</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -47,6 +47,17 @@
                 <button id="convertBtn" class="convert-button">Convert</button>
             </div>
             <textarea id="outputCode" placeholder="Converted code will appear here..." class="code-output" readonly></textarea>
+        </div>
+        <div class="settings">
+            <h3>Settings</h3>
+            <div class="setting-option">
+                <label for="animation">Toggle Animations:</label>
+                <input type="checkbox" id="animationToggle" checked>
+            </div>
+            <div class="setting-option">
+                <label for="textboxColor">Text Box Color:</label>
+                <input type="color" id="textboxColor" value="#2d2d2d">
+            </div>
         </div>
         <div id="loading" class="loading hidden">Converting...</div>
     </div>

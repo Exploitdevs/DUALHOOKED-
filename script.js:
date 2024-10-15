@@ -11,43 +11,61 @@ document.getElementById('convertBtn').addEventListener('click', function() {
     document.getElementById('loading').classList.remove('hidden');
 
     setTimeout(() => {
-        let convertedCode;
-
-        // Simulated conversion logic
-        if (inputLang === 'python' && outputLang === 'html') {
-            convertedCode = `
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Python to HTML</title>
-</head>
-<body>
-    <h1>Your Python Code</h1>
-    <pre>${inputCode}</pre>
-</body>
-</html>`;
-        } else if (inputLang === 'html' && outputLang === 'python') {
-            convertedCode = `import webbrowser\n\nhtml_content = '''${inputCode}'''\n\nwith open('index.html', 'w') as file:\n    file.write(html_content)\nwebbrowser.open('index.html')`;
-        } else {
-            convertedCode = `Conversion from ${inputLang} to ${outputLang} is not implemented yet.`;
-        }
-
-        document.getElementById('outputCode').value = convertedCode;
+        const outputCode = convertCode(inputCode, inputLang, outputLang);
+        document.getElementById('outputCode').value = outputCode;
         document.getElementById('loading').classList.add('hidden');
-    }, 2000); // Simulated loading time
+    }, 1000);
 });
 
-// Animation and color settings
-document.getElementById('animationToggle').addEventListener('change', function() {
-    const textAreas = document.querySelectorAll('.code-input, .code-output');
-    if (this.checked) {
-        textAreas.forEach(area => area.classList.add('animated'));
+function convertCode(inputCode, inputLang, outputLang) {
+    // Example conversion logic (extend this with real translations)
+    if (inputLang === 'python' && outputLang === 'html') {
+        return `<html>\n<body>\n<p>${inputCode}</p>\n</body>\n</html>`;
+    } else if (inputLang === 'html' && outputLang === 'python') {
+        return `import requests\n\n# Converted HTML code from Python:\nhtml_code = """\n${inputCode}\n"""`;
     } else {
-        textAreas.forEach(area => area.classList.remove('animated'));
+        return `# Conversion from ${inputLang} to ${outputLang} not yet supported.`;
+    }
+}
+
+// Settings functionality
+document.getElementById('animationToggle').addEventListener('change', function() {
+    const areas = document.querySelectorAll('.code-input, .code-output');
+    if (this.checked) {
+        areas.forEach(area => area.classList.add('animated'));
+    } else {
+        areas.forEach(area => area.classList.remove('animated'));
     }
 });
 
 document.getElementById('textboxColor').addEventListener('input', function() {
-    const textAreas = document.querySelectorAll('.code-input, .code-output');
-    textAreas.forEach(area => area.style.backgroundColor = this.value);
+    const areas = document.querySelectorAll('.code-input, .code-output');
+    areas.forEach(area => area.style.backgroundColor = this.value);
+});
+
+document.getElementById('textboxBorderColor').addEventListener('input', function() {
+    const areas = document.querySelectorAll('.code-input, .code-output');
+    areas.forEach(area => area.style.borderColor = this.value);
+});
+
+document.getElementById('fontSize').addEventListener('input', function() {
+    const areas = document.querySelectorAll('.code-input, .code-output');
+    areas.forEach(area => area.style.fontSize = `${this.value}px`);
+});
+
+document.getElementById('themeSelect').addEventListener('change', function() {
+    const theme = this.value;
+    if (theme === 'dark') {
+        document.body.style.backgroundColor = '#121212';
+        document.body.style.color = '#fff';
+    } else if (theme === 'light') {
+        document.body.style.backgroundColor = '#f0f0f0';
+        document.body.style.color = '#000';
+    } else if (theme === 'blue') {
+        document.body.style.backgroundColor = '#003366';
+        document.body.style.color = '#fff';
+    } else if (theme === 'green') {
+        document.body.style.backgroundColor = '#004d00';
+        document.body.style.color = '#fff';
+    }
 });

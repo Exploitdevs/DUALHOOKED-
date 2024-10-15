@@ -16,7 +16,7 @@ document.getElementById('convertBtn').addEventListener('click', function() {
 
         // Simple mock conversion logic for demonstration
         if (inputLang === 'javascript' && outputLang === 'python') {
-            convertedCode = inputCode.replace(/console.log/g, 'print');
+            convertedCode = inputCode.replace(/console\.log/g, 'print');
         } else if (inputLang === 'python' && outputLang === 'javascript') {
             convertedCode = inputCode.replace(/print/g, 'console.log');
         } else {

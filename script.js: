@@ -1,36 +1,29 @@
-document.getElementById("convertBtn").addEventListener("click", function() {
-    const inputCode = document.getElementById("inputCode").value.trim();
-    const inputLang = document.getElementById("inputLang").value;
-    const outputLang = document.getElementById("outputLang").value;
+document.getElementById('convertBtn').addEventListener('click', function() {
+    const inputCode = document.getElementById('inputCode').value;
+    const inputLang = document.getElementById('inputLang').value;
+    const outputLang = document.getElementById('outputLang').value;
 
-    if (!inputCode) {
-        alert("Please enter some code to convert.");
+    if (inputCode.trim() === '') {
+        alert('Please enter code to convert.');
         return;
     }
 
-    // Show loading animation
-    const loading = document.getElementById("loading");
-    loading.classList.remove("hidden");
+    document.getElementById('loading').classList.remove('hidden');
 
-    // Simulate conversion processing time
+    // Simulate conversion with a timeout
     setTimeout(() => {
-        const convertedCode = convertCode(inputLang, outputLang, inputCode);
-        document.getElementById("outputCode").value = convertedCode;
+        let convertedCode;
 
-        // Hide loading animation
-        loading.classList.add("hidden");
-    }, 1000); // Simulated loading time
+        // Simple mock conversion logic for demonstration
+        if (inputLang === 'javascript' && outputLang === 'python') {
+            convertedCode = inputCode.replace(/console.log/g, 'print');
+        } else if (inputLang === 'python' && outputLang === 'javascript') {
+            convertedCode = inputCode.replace(/print/g, 'console.log');
+        } else {
+            convertedCode = `Conversion from ${inputLang} to ${outputLang} is not implemented yet.`;
+        }
+
+        document.getElementById('outputCode').value = convertedCode;
+        document.getElementById('loading').classList.add('hidden');
+    }, 2000); // Simulate loading time
 });
-
-// Function to convert code between languages
-function convertCode(inputLang, outputLang, code) {
-    // Example conversion logic
-    if (inputLang === "python" && outputLang === "javascript") {
-        return code.replace(/print\((.+?)\)/g, 'console.log($1);');
-    }
-    if (inputLang === "javascript" && outputLang === "python") {
-        return code.replace(/console\.log\((.+?)\);/g, 'print($1)');
-    }
-    // Add more conversion rules here
-    return `Conversion from ${inputLang} to ${outputLang} is not yet implemented.`;
-}

@@ -116,6 +116,7 @@ h1 {
     border-color: #9a7de0;
     outline: none;
     box-shadow: 0 0 10px #7a5cc1;
+    animation: pulse 1s infinite; /* Add pulse effect */
 }
 
 .convert-section {

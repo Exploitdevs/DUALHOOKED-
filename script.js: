@@ -1,56 +1,11 @@
-// Predefined images (you can replace these with your images)
-const images = [
-    { url: 'path/to/your/image1.jpg', caption: 'Ugly Pic 1' },
-    { url: 'path/to/your/image2.jpg', caption: 'Ugly Pic 2' },
-    { url: 'path/to/your/image3.jpg', caption: 'Ugly Pic 3' },
-];
+document.getElementById("convertBtn").addEventListener("click", function() {
+    const inputCode = document.getElementById("inputCode").value;
+    const inputLang = document.getElementById("inputLang").value;
+    const outputLang = document.getElementById("outputLang").value;
 
-const mainContainer = document.getElementById('mainContainer');
-const photoGallery = document.getElementById('photoGallery');
-const showGalleryButton = document.getElementById('showGalleryButton');
+    // Placeholder conversion logic
+    // You can replace this with actual conversion logic for different languages
+    const convertedCode = `Converted from ${inputLang} to ${outputLang}: \n${inputCode}`;
 
-// Show gallery function
-function showGallery() {
-    // Clear the main container
-    mainContainer.style.opacity = 0;
-    mainContainer.style.transition = 'opacity 0.5s ease';
-
-    // Wait for fade out to complete
-    setTimeout(() => {
-        mainContainer.style.display = 'none'; // Hide main container
-
-        // Show gallery
-        photoGallery.innerHTML = ''; // Clear previous photos
-
-        // Build the gallery with images
-        images.forEach((image, index) => {
-            const photoPanel = document.createElement('div');
-            photoPanel.classList.add('photo-panel');
-
-            const imgElement = document.createElement('img');
-            imgElement.src = image.url;
-
-            const caption = document.createElement('div');
-            caption.classList.add('caption');
-            caption.innerText = image.caption;
-
-            photoPanel.appendChild(imgElement);
-            photoPanel.appendChild(caption);
-            photoGallery.appendChild(photoPanel);
-
-            // Set timeout for build-up animation
-            setTimeout(() => {
-                photoPanel.style.opacity = 1; // Fade in
-            }, index * 200); // Delay for each image
-        });
-
-        // Fade in the gallery
-        photoGallery.style.display = 'grid';
-        setTimeout(() => {
-            photoGallery.style.opacity = 1;
-        }, 100);
-    }, 500); // Wait for fade out
-}
-
-// Show gallery button event listener
-showGalleryButton.addEventListener('click', showGallery);
+    document.getElementById("outputCode").value = convertedCode;
+});

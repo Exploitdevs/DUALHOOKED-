@@ -8,16 +8,47 @@ body {
     font-family: 'Arial', sans-serif;
     background-color: #121212;
     color: #fff;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .container {
-    max-width: 800px;
-    margin: 50px auto;
+    display: flex;
+    flex-grow: 1;
     padding: 20px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #2d2d2d, #3c3c3c);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    animation: fadeIn 0.5s ease-in;
+}
+
+.settings-panel {
+    width: 250px;
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.settings-panel h2 {
+    color: #7a5cc1;
+    margin-bottom: 20px;
+}
+
+.setting-option {
+    margin-bottom: 15px;
+}
+
+.setting-option label {
+    display: block;
+    margin-bottom: 5px;
+    color: #ddd;
+}
+
+#fontSize {
+    width: 100%;
+}
+
+.main-content {
+    flex-grow: 1;
+    margin-left: 20px;
 }
 
 h1 {
@@ -78,13 +109,13 @@ h1 {
     background-color: #2d2d2d;
     color: #fff;
     transition: border-color 0.3s, background-color 0.3s;
-    animation: pulse 2s infinite;
 }
 
-.code-input:focus,
-.code-output:focus {
+.code-input:hover,
+.code-output:hover {
     border-color: #9a7de0;
     outline: none;
+    box-shadow: 0 0 10px #7a5cc1;
 }
 
 .convert-section {
@@ -111,17 +142,6 @@ h1 {
     transform: translateY(-2px);
 }
 
-.settings {
-    margin-top: 20px;
-    border-top: 1px solid #444;
-    padding-top: 20px;
-    animation: fadeIn 0.5s ease-in;
-}
-
-.setting-option {
-    margin-bottom: 15px;
-}
-
 .loading {
     text-align: center;
     font-size: 18px;
@@ -130,15 +150,6 @@ h1 {
 
 .hidden {
     display: none;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
 }
 
 @keyframes slideIn {

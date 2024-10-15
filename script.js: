@@ -18,11 +18,15 @@ document.getElementById('convertBtn').addEventListener('click', function() {
 });
 
 function convertCode(inputCode, inputLang, outputLang) {
-    // Example conversion logic (extend this with real translations)
+    // Basic conversion logic (extend this with real translations)
     if (inputLang === 'python' && outputLang === 'html') {
-        return `<html>\n<body>\n<p>${inputCode}</p>\n</body>\n</html>`;
+        return `<html>\n<head>\n<title>Converted Python</title>\n</head>\n<body>\n<pre>${inputCode}</pre>\n</body>\n</html>`;
     } else if (inputLang === 'html' && outputLang === 'python') {
-        return `import requests\n\n# Converted HTML code from Python:\nhtml_code = """\n${inputCode}\n"""`;
+        return `# Converted HTML to Python:\nhtml_code = """\n${inputCode}\n"""`;
+    } else if (inputLang === 'javascript' && outputLang === 'python') {
+        return `# JavaScript to Python conversion:\nfunction myFunction() {\n${inputCode}\n}`;
+    } else if (inputLang === 'python' && outputLang === 'javascript') {
+        return `// Converted Python to JavaScript:\nlet result = \`${inputCode}\`;`;
     } else {
         return `# Conversion from ${inputLang} to ${outputLang} not yet supported.`;
     }
@@ -45,7 +49,10 @@ document.getElementById('textboxColor').addEventListener('input', function() {
 
 document.getElementById('textboxBorderColor').addEventListener('input', function() {
     const areas = document.querySelectorAll('.code-input, .code-output');
-    areas.forEach(area => area.style.borderColor = this.value);
+    areas.forEach(area => {
+        area.style.borderColor = this.value;
+        area.style.boxShadow = `0 0 10px ${this.value}`;
+    });
 });
 
 document.getElementById('fontSize').addEventListener('input', function() {

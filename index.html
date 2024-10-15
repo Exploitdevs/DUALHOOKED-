@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Code Converter</title>
+    <title>Code Converter</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <h1>Code Converter</h1>
         <div class="converter">
-            <div class="input-output">
-                <div class="input-section">
+            <div class="language-selection">
+                <div class="input-group">
                     <label for="inputLang" class="label">Input Language:</label>
                     <select id="inputLang" class="language-select">
                         <option value="python">Python</option>
@@ -25,12 +25,8 @@
                         <option value="swift">Swift</option>
                         <option value="binary">Binary</option>
                     </select>
-                    <textarea id="inputCode" placeholder="Enter your code here..." class="code-input"></textarea>
                 </div>
-                <div class="convert-section">
-                    <button id="convertBtn" class="convert-button">Convert</button>
-                </div>
-                <div class="output-section">
+                <div class="input-group">
                     <label for="outputLang" class="label">Output Language:</label>
                     <select id="outputLang" class="language-select">
                         <option value="python">Python</option>
@@ -44,9 +40,13 @@
                         <option value="swift">Swift</option>
                         <option value="binary">Binary</option>
                     </select>
-                    <textarea id="outputCode" placeholder="Converted code will appear here..." class="code-output" readonly></textarea>
                 </div>
             </div>
+            <textarea id="inputCode" placeholder="Enter your code here..." class="code-input"></textarea>
+            <div class="convert-section">
+                <button id="convertBtn" class="convert-button">Convert</button>
+            </div>
+            <textarea id="outputCode" placeholder="Converted code will appear here..." class="code-output" readonly></textarea>
         </div>
         <div id="loading" class="loading hidden">Converting...</div>
     </div>

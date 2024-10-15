@@ -10,20 +10,44 @@ document.getElementById('convertBtn').addEventListener('click', function() {
 
     document.getElementById('loading').classList.remove('hidden');
 
-    // Simulate conversion with a timeout
     setTimeout(() => {
         let convertedCode;
 
-        // Simple mock conversion logic for demonstration
-        if (inputLang === 'javascript' && outputLang === 'python') {
-            convertedCode = inputCode.replace(/console\.log/g, 'print');
-        } else if (inputLang === 'python' && outputLang === 'javascript') {
-            convertedCode = inputCode.replace(/print/g, 'console.log');
+        // Simulated conversion logic
+        if (inputLang === 'python' && outputLang === 'html') {
+            convertedCode = `
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Python to HTML</title>
+</head>
+<body>
+    <h1>Your Python Code</h1>
+    <pre>${inputCode}</pre>
+</body>
+</html>`;
+        } else if (inputLang === 'html' && outputLang === 'python') {
+            convertedCode = `import webbrowser\n\nhtml_content = '''${inputCode}'''\n\nwith open('index.html', 'w') as file:\n    file.write(html_content)\nwebbrowser.open('index.html')`;
         } else {
             convertedCode = `Conversion from ${inputLang} to ${outputLang} is not implemented yet.`;
         }
 
         document.getElementById('outputCode').value = convertedCode;
         document.getElementById('loading').classList.add('hidden');
-    }, 2000); // Simulate loading time
+    }, 2000); // Simulated loading time
+});
+
+// Animation and color settings
+document.getElementById('animationToggle').addEventListener('change', function() {
+    const textAreas = document.querySelectorAll('.code-input, .code-output');
+    if (this.checked) {
+        textAreas.forEach(area => area.classList.add('animated'));
+    } else {
+        textAreas.forEach(area => area.classList.remove('animated'));
+    }
+});
+
+document.getElementById('textboxColor').addEventListener('input', function() {
+    const textAreas = document.querySelectorAll('.code-input, .code-output');
+    textAreas.forEach(area => area.style.backgroundColor = this.value);
 });

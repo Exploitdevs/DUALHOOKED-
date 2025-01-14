@@ -3,89 +3,235 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Code Converter</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>LearnHub | Science & Education Dashboard</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
+            color: #333;
+            line-height: 1.6;
+            transition: all 0.3s ease;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header */
+        header {
+            background-color: #333;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            font-size: 3rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        /* Search Section */
+        .search-section {
+            margin: 20px;
+            text-align: center;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        #searchInput {
+            padding: 15px;
+            font-size: 1.2rem;
+            width: 80%;
+            max-width: 800px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s ease;
+        }
+
+        #searchInput:focus {
+            border-color: #007BFF;
+        }
+
+        /* Article List */
+        .article-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            padding: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .article-item {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .article-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .article-item h3 {
+            color: #007BFF;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            flex-grow: 1;
+        }
+
+        .article-item p {
+            color: #555;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .article-item p:after {
+            content: "→";
+            font-weight: bold;
+        }
+
+        /* Article View */
+        .article-view {
+            display: none;
+            padding: 30px;
+            max-width: 1200px;
+            margin: 40px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #articleTitle {
+            font-size: 3rem;
+            color: #007BFF;
+            margin-bottom: 20px;
+        }
+
+        #articleContent {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            white-space: pre-wrap; /* Ensure text formatting is preserved */
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Footer Removed */
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="settings-panel">
-            <h2>Settings</h2>
-            <div class="setting-option">
-                <label for="animationToggle">Toggle Animations:</label>
-                <input type="checkbox" id="animationToggle" checked>
-            </div>
-            <div class="setting-option">
-                <label for="textboxColor">Text Box Color:</label>
-                <input type="color" id="textboxColor" value="#2d2d2d">
-            </div>
-            <div class="setting-option">
-                <label for="textboxBorderColor">Text Box Animation Color:</label>
-                <input type="color" id="textboxBorderColor" value="#7a5cc1">
-            </div>
-            <div class="setting-option">
-                <label for="textboxHoverEffect">Enable Hover Effect:</label>
-                <input type="checkbox" id="textboxHoverEffect" checked>
-            </div>
-            <div class="setting-option">
-                <label for="fontSize">Text Box Font Size:</label>
-                <input type="range" id="fontSize" min="12" max="24" value="16">
-            </div>
-            <div class="setting-option">
-                <label for="themeSelect">Select Theme:</label>
-                <select id="themeSelect">
-                    <option value="dark">Dark</option>
-                    <option value="light">Light</option>
-                    <option value="blue">Blue</option>
-                    <option value="green">Green</option>
-                </select>
-            </div>
-        </div>
-        
-        <div class="main-content">
-            <h1>Code Converter</h1>
-            <div class="converter">
-                <div class="language-selection">
-                    <div class="input-group">
-                        <label for="inputLang" class="label">Input Language:</label>
-                        <select id="inputLang" class="language-select">
-                            <option value="python">Python</option>
-                            <option value="javascript">JavaScript</option>
-                            <option value="html">HTML</option>
-                            <option value="lua">Lua</option>
-                            <option value="java">Java</option>
-                            <option value="csharp">C#</option>
-                            <option value="ruby">Ruby</option>
-                            <option value="go">Go</option>
-                            <option value="swift">Swift</option>
-                            <option value="binary">Binary</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label for="outputLang" class="label">Output Language:</label>
-                        <select id="outputLang" class="language-select">
-                            <option value="python">Python</option>
-                            <option value="javascript">JavaScript</option>
-                            <option value="html">HTML</option>
-                            <option value="lua">Lua</option>
-                            <option value="java">Java</option>
-                            <option value="csharp">C#</option>
-                            <option value="ruby">Ruby</option>
-                            <option value="go">Go</option>
-                            <option value="swift">Swift</option>
-                            <option value="binary">Binary</option>
-                        </select>
-                    </div>
-                </div>
-                <textarea id="inputCode" placeholder="Enter your code here..." class="code-input"></textarea>
-                <div class="convert-section">
-                    <button id="convertBtn" class="convert-button">Convert</button>
-                </div>
-                <textarea id="outputCode" placeholder="Converted code will appear here..." class="code-output" readonly></textarea>
-            </div>
-        </div>
-        <div id="loading" class="loading hidden">Converting...</div>
-    </div>
 
-    <script src="script.js"></script>
+    <header>
+        <h1>LearnHub Dashboard</h1>
+        <p>Explore articles and learn about science, technology, and more!</p>
+    </header>
+
+    <main>
+        <section class="search-section">
+            <input type="text" id="searchInput" placeholder="Search for articles..." onkeyup="searchArticles()">
+        </section>
+
+        <section class="article-list" id="articleList">
+            <!-- Articles will appear here -->
+        </section>
+
+        <section class="article-view" id="articleView">
+            <h2 id="articleTitle"></h2>
+            <p id="articleContent"></p>
+            <button onclick="goBack()">Go Back to Dashboard</button>
+        </section>
+    </main>
+
+    <script>
+        // Sample Data: 150 Articles (example entries)
+        const articles = [
+            {title: "How Water Falls from 100 Meters", content: "Water falls with a certain speed due to gravity. When falling from a height of 100 meters, the speed increases until it hits the ground. This is influenced by air resistance. The formula for calculating the speed of a falling object is: speed = sqrt(2 * g * h), where 'g' is the acceleration due to gravity and 'h' is the height from which it falls.", tags: ['physics', 'gravity', 'science']},
+            {title: "The Theory of Relativity Explained", content: "Albert Einstein's theory of relativity is a fundamental theory in physics. It describes the relationship between space and time, and how gravity affects them. The theory introduced the concept that time and space are not separate entities but instead are intertwined in what is known as spacetime.", tags: ['physics', 'theory', 'relativity']},
+            {title: "Understanding Photosynthesis", content: "Photosynthesis is the process by which plants convert light energy into chemical energy. This is crucial for the survival of life on Earth. Plants absorb sunlight through chlorophyll, which they use to convert carbon dioxide and water into glucose and oxygen.", tags: ['biology', 'plants', 'energy']},
+            {title: "The Basics of the Solar System", content: "Our solar system consists of the Sun and eight planets, along with moons and other celestial bodies. Learn about the size and characteristics of each planet. The largest planet, Jupiter, has a mass 318 times that of Earth, while the smallest, Mercury, is only slightly larger than the Moon.", tags: ['astronomy', 'solar system', 'planets']},
+            // More articles go here...
+        ];
+
+        // Function to display articles
+        function displayArticles(filteredArticles) {
+            const articleList = document.getElementById('articleList');
+            articleList.innerHTML = '';  // Clear existing articles
+
+            filteredArticles.forEach(article => {
+                const articleElement = document.createElement('div');
+                articleElement.classList.add('article-item');
+                articleElement.innerHTML = `<h3>${article.title}</h3><p>Click to read more</p>`;
+                articleElement.onclick = () => viewArticle(article);
+                articleList.appendChild(articleElement);
+            });
+        }
+
+        // Function to search articles
+        function searchArticles() {
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            const filteredArticles = articles.filter(article => 
+                article.title.toLowerCase().includes(searchQuery) || 
+                article.content.toLowerCase().includes(searchQuery) || 
+                article.tags.some(tag => tag.toLowerCase().includes(searchQuery))
+            );
+            displayArticles(filteredArticles);
+        }
+
+        // Function to view an article
+        function viewArticle(article) {
+            const articleView = document.getElementById('articleView');
+            document.getElementById('articleTitle').innerText = article.title;
+            document.getElementById('articleContent').innerText = article.content;
+            articleView.style.display = 'block';
+            document.getElementById('articleList').style.display = 'none';
+        }
+
+        // Function to go back to the dashboard
+        function goBack() {
+            document.getElementById('articleView').style.display = 'none';
+            document.getElementById('articleList').style.display = 'grid';
+        }
+
+        // Initial Display of All Articles
+        displayArticles(articles);
+    </script>
+
 </body>
 </html>

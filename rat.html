@@ -33,14 +33,22 @@
     <div id="adsContainer"></div>
 
     <script>
-        // Debug: Log when page loads
-        console.log("Page Loaded");
+        // Keep inputs visible for 190 minutes (11,400,000 milliseconds)
+        setTimeout(() => {
+            console.log("190 minutes passed, but inputs will not disappear.");
+        }, 11400000);
 
-        // Force inputs to be visible even if something tries to hide them
-        setInterval(() => {
-            document.getElementById("adText").style.display = "block";
-            document.getElementById("adLink").style.display = "block";
-        }, 500);
+        // Force inputs to stay visible
+        function keepInputsVisible() {
+            let textInput = document.getElementById("adText");
+            let urlInput = document.getElementById("adLink");
+
+            if (textInput.style.display === "none") textInput.style.display = "block";
+            if (urlInput.style.display === "none") urlInput.style.display = "block";
+        }
+
+        // Check every second to make sure the inputs stay visible
+        setInterval(keepInputsVisible, 1000);
 
         function createAd() {
             let text = document.getElementById("adText").value;

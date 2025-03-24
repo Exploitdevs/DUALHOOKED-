@@ -3,41 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Remote Access Panel</title>
+    <title>Remote Access + Ad Creator</title>
     <style>
         body { font-family: Arial, sans-serif; background: #111; color: white; text-align: center; }
         h1 { margin-top: 20px; }
         .container { display: flex; justify-content: center; gap: 20px; margin-top: 20px; flex-wrap: wrap; }
         .panel { background: #222; padding: 15px; border-radius: 10px; width: 300px; }
         button, input { margin-top: 10px; padding: 10px; width: 100%; font-size: 16px; }
-        video, audio { border: 2px solid white; margin-top: 10px; width: 100%; display: none; }
         .ad-box { background: white; color: black; padding: 10px; margin: 10px auto; width: 200px; text-align: center; cursor: pointer; border: 1px solid black; }
-        #bsod { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: blue; color: white; text-align: center; padding-top: 20%; font-size: 24px; }
+        #adsContainer { margin-top: 20px; }
     </style>
 </head>
 <body>
-    <h1>Remote Access Control Panel</h1>
+    <h1>Remote Access Control Panel + Ad System</h1>
 
     <div class="container">
-        <!-- Control Panel -->
-        <div class="panel">
-            <h2>Controls</h2>
-            <button id="screenBtn" onclick="toggleScreen()">Start Screen Stream</button>
-            <button onclick="startWebcam()">Start Webcam</button>
-            <button onclick="startMic()">Start Microphone</button>
-            <button onclick="fakeBSOD()">Trigger BSOD</button>
-            <button onclick="popupSpam()">Spam Pop-ups</button>
-            <button onclick="fakeUpdate()">Fake Windows Update</button>
-        </div>
-
-        <!-- Display Panel -->
-        <div class="panel">
-            <h2>Live Streams</h2>
-            <video id="screen" autoplay></video>
-            <video id="webcam" autoplay></video>
-            <audio id="audio" autoplay controls></audio>
-        </div>
-
         <!-- Ad System -->
         <div class="panel">
             <h2>Ad Creator</h2>
@@ -48,94 +28,9 @@
         </div>
     </div>
 
-    <!-- Fake BSOD -->
-    <div id="bsod">
-        😵 Your PC ran into a problem and needs to restart.<br>
-        We're just collecting some error info and then we'll restart for you.<br><br>
-        <b>ERROR CODE: CRITICAL_PROCESS_DIED</b><br><br>
-        If you need help, search online for this error: CRITICAL_PROCESS_DIED<br>
-        0% Complete...
-    </div>
-
     <div id="adsContainer"></div>
 
     <script>
-        let screenStream = null;
-
-        async function toggleScreen() {
-            let btn = document.getElementById("screenBtn");
-            let video = document.getElementById("screen");
-
-            if (screenStream) {
-                screenStream.getTracks().forEach(track => track.stop());
-                video.style.display = "none";
-                screenStream = null;
-                btn.innerText = "Start Screen Stream";
-            } else {
-                try {
-                    screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
-                    video.srcObject = screenStream;
-                    video.style.display = "block";
-                    btn.innerText = "Stop Screen Stream";
-                } catch (error) {
-                    alert("Error: " + error.message);
-                }
-            }
-        }
-
-        async function startWebcam() {
-            try {
-                let stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                document.getElementById("webcam").srcObject = stream;
-                document.getElementById("webcam").style.display = "block";
-            } catch (error) {
-                alert("Error: " + error.message);
-            }
-        }
-
-        async function startMic() {
-            try {
-                let stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                document.getElementById("audio").srcObject = stream;
-            } catch (error) {
-                alert("Error: " + error.message);
-            }
-        }
-
-        function fakeBSOD() {
-            let bsod = document.getElementById("bsod");
-            bsod.style.display = "block";
-            setTimeout(() => { bsod.innerHTML += "<br>10% Complete..."; }, 2000);
-            setTimeout(() => { bsod.innerHTML += "<br>30% Complete..."; }, 4000);
-            setTimeout(() => { bsod.innerHTML += "<br>60% Complete..."; }, 6000);
-            setTimeout(() => { bsod.innerHTML += "<br>90% Complete..."; }, 8000);
-            setTimeout(() => { bsod.innerHTML += "<br>Restarting now..."; }, 10000);
-            setTimeout(() => { bsod.style.display = "none"; }, 12000);
-        }
-
-        function popupSpam() {
-            for (let i = 0; i < 3; i++) {
-                setTimeout(() => { window.open("https://theuselessweb.com/", "_blank"); }, i * 2000);
-            }
-        }
-
-        function fakeUpdate() {
-            let updateScreen = document.createElement("div");
-            updateScreen.style.position = "fixed";
-            updateScreen.style.top = "0";
-            updateScreen.style.left = "0";
-            updateScreen.style.width = "100%";
-            updateScreen.style.height = "100%";
-            updateScreen.style.background = "black";
-            updateScreen.style.color = "white";
-            updateScreen.style.fontSize = "30px";
-            updateScreen.style.textAlign = "center";
-            updateScreen.style.paddingTop = "20%";
-            updateScreen.innerHTML = "🔄 Installing Windows Updates... <br> Please do not turn off your computer.";
-            document.body.appendChild(updateScreen);
-            setTimeout(() => { updateScreen.remove(); }, 10000);
-        }
-
         function createAd() {
             let text = document.getElementById("adText").value;
             let link = document.getElementById("adLink").value;

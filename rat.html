@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Remote Access + Ad Creator</title>
+    <title>Remote Access Panel</title>
     <style>
         body { font-family: Arial, sans-serif; background: #111; color: white; text-align: center; }
         h1 { margin-top: 20px; }
@@ -15,7 +15,7 @@
     </style>
 </head>
 <body>
-    <h1>Remote Access Control Panel + Ad System</h1>
+    <h1>Remote Access Control Panel</h1>
 
     <div class="container">
         <!-- Ad System -->
@@ -34,7 +34,10 @@
         function createAd() {
             let text = document.getElementById("adText").value;
             let link = document.getElementById("adLink").value;
-            if (!text || !link) return alert("Please enter ad text and URL.");
+            if (!text || !link) {
+                alert("Please enter ad text and URL.");
+                return;
+            }
 
             let ad = document.createElement("div");
             ad.className = "ad-box";
@@ -45,7 +48,10 @@
 
         function spawnPopups() {
             let link = document.getElementById("adLink").value;
-            if (!link) return alert("Enter an ad URL first.");
+            if (!link) {
+                alert("Enter an ad URL first.");
+                return;
+            }
 
             for (let i = 0; i < 3; i++) {
                 setTimeout(() => { window.open(link, "_blank"); }, i * 2000);

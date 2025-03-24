@@ -10,8 +10,8 @@
         .container { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
         .panel { background: #222; padding: 15px; border-radius: 10px; width: 300px; }
         button, input { margin-top: 10px; padding: 10px; width: 100%; font-size: 16px; }
-        video, img { border: 2px solid white; margin-top: 10px; width: 100%; }
-        .hidden { display: none; }
+        video { border: 2px solid white; margin-top: 10px; width: 100%; display: none; }
+        #bsod { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: blue; color: white; text-align: center; padding-top: 20%; font-size: 24px; }
     </style>
 </head>
 <body>
@@ -21,20 +21,21 @@
         <!-- Control Panel -->
         <div class="panel">
             <h2>Controls</h2>
-            <button onclick="startScreen()">Start Screen Stream</button>
+            <button id="screenBtn" onclick="toggleScreen()">Start Screen Stream</button>
             <button onclick="startWebcam()">Start Webcam</button>
             <button onclick="startMic()">Start Microphone</button>
             <button onclick="shutdown()">Shutdown PC</button>
-            <button onclick="openLink()">Open Fun Website</button>
-            <button onclick="fakeBSOD()">Trigger Fake BSOD</button>
+            <button onclick="fakeBSOD()">Trigger BSOD</button>
+            <button onclick="popupSpam()">Spam Pop-ups</button>
+            <button onclick="fakeUpdate()">Fake Windows Update</button>
         </div>
 
         <!-- Display Panel -->
         <div class="panel">
             <h2>Live Streams</h2>
-            <video id="screen" class="hidden" autoplay></video>
-            <video id="webcam" class="hidden" autoplay></video>
-            <audio id="audio" class="hidden" autoplay controls></audio>
+            <video id="screen" autoplay></video>
+            <video id="webcam" autoplay></video>
+            <audio id="audio" autoplay controls></audio>
         </div>
 
         <!-- File Panel -->
@@ -45,22 +46,46 @@
         </div>
     </div>
 
+    <!-- Fake BSOD -->
+    <div id="bsod">
+        😵 Your PC ran into a problem and needs to restart.<br>
+        We're just collecting some error info and then we'll restart for you.<br><br>
+        <b>ERROR CODE: CRITICAL_PROCESS_DIED</b><br><br>
+        If you need help, search online for this error: CRITICAL_PROCESS_DIED<br>
+        0% Complete...
+    </div>
+
     <script>
-        async function startScreen() {
-            try {
-                const stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
-                document.getElementById("screen").srcObject = stream;
-                document.getElementById("screen").classList.remove("hidden");
-            } catch (error) {
-                alert("Error: " + error.message);
+        let screenStream = null;
+
+        async function toggleScreen() {
+            let btn = document.getElementById("screenBtn");
+            let video = document.getElementById("screen");
+
+            if (screenStream) {
+                // Stop screen sharing
+                screenStream.getTracks().forEach(track => track.stop());
+                video.style.display = "none";
+                screenStream = null;
+                btn.innerText = "Start Screen Stream";
+            } else {
+                // Start screen sharing
+                try {
+                    screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+                    video.srcObject = screenStream;
+                    video.style.display = "block";
+                    btn.innerText = "Stop Screen Stream";
+                } catch (error) {
+                    alert("Error: " + error.message);
+                }
             }
         }
 
         async function startWebcam() {
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                let stream = await navigator.mediaDevices.getUserMedia({ video: true });
                 document.getElementById("webcam").srcObject = stream;
-                document.getElementById("webcam").classList.remove("hidden");
+                document.getElementById("webcam").style.display = "block";
             } catch (error) {
                 alert("Error: " + error.message);
             }
@@ -68,9 +93,8 @@
 
         async function startMic() {
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                let stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                 document.getElementById("audio").srcObject = stream;
-                document.getElementById("audio").classList.remove("hidden");
             } catch (error) {
                 alert("Error: " + error.message);
             }
@@ -86,32 +110,46 @@
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-            alert("File downloaded. Please run it manually.");
+
+            alert("File downloaded. Open it to execute.");
         }
 
         function shutdown() {
-            alert("Just kidding! Browsers don't allow shutting down your PC 😆");
-        }
-
-        function openLink() {
-            window.open("https://theuselessweb.com/", "_blank");
+            alert("Just kidding! Browsers can't shut down your PC.");
         }
 
         function fakeBSOD() {
-            let bsod = document.createElement("div");
-            bsod.style.position = "fixed";
-            bsod.style.top = "0";
-            bsod.style.left = "0";
-            bsod.style.width = "100%";
-            bsod.style.height = "100%";
-            bsod.style.background = "blue";
-            bsod.style.color = "white";
-            bsod.style.fontSize = "40px";
-            bsod.style.textAlign = "center";
-            bsod.style.paddingTop = "20%";
-            bsod.innerHTML = "💀 Your PC ran into a problem and needs to restart.<br><br>Error Code: FAKE_BSOD";
-            document.body.appendChild(bsod);
-            setTimeout(() => { bsod.remove(); }, 5000);
+            let bsod = document.getElementById("bsod");
+            bsod.style.display = "block";
+            setTimeout(() => { bsod.innerHTML += "<br>10% Complete..."; }, 2000);
+            setTimeout(() => { bsod.innerHTML += "<br>30% Complete..."; }, 4000);
+            setTimeout(() => { bsod.innerHTML += "<br>60% Complete..."; }, 6000);
+            setTimeout(() => { bsod.innerHTML += "<br>90% Complete..."; }, 8000);
+            setTimeout(() => { bsod.innerHTML += "<br>Restarting now..."; }, 10000);
+            setTimeout(() => { bsod.style.display = "none"; }, 12000);
+        }
+
+        function popupSpam() {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => { window.open("https://theuselessweb.com/", "_blank"); }, i * 1000);
+            }
+        }
+
+        function fakeUpdate() {
+            let updateScreen = document.createElement("div");
+            updateScreen.style.position = "fixed";
+            updateScreen.style.top = "0";
+            updateScreen.style.left = "0";
+            updateScreen.style.width = "100%";
+            updateScreen.style.height = "100%";
+            updateScreen.style.background = "black";
+            updateScreen.style.color = "white";
+            updateScreen.style.fontSize = "30px";
+            updateScreen.style.textAlign = "center";
+            updateScreen.style.paddingTop = "20%";
+            updateScreen.innerHTML = "🔄 Installing Windows Updates... <br> Please do not turn off your computer.";
+            document.body.appendChild(updateScreen);
+            setTimeout(() => { updateScreen.remove(); }, 10000);
         }
     </script>
 </body>

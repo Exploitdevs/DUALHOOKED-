@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Remote Access Ad System</title>
+    <title>Ad System</title>
     <style>
         body { font-family: Arial, sans-serif; background: #111; color: white; text-align: center; }
         h1 { margin-top: 20px; }
-        .container { display: flex; justify-content: center; gap: 20px; margin-top: 20px; flex-wrap: wrap; }
-        .panel { background: #222; padding: 15px; border-radius: 10px; width: 300px; }
-        button, input { margin-top: 10px; padding: 10px; width: 100%; font-size: 16px; }
-        .ad-box { background: white; color: black; padding: 10px; margin: 10px auto; width: 200px; text-align: center; cursor: pointer; border: 1px solid black; }
+        .container { display: flex; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
+        .panel { background: #222; padding: 20px; border-radius: 10px; width: 320px; text-align: center; }
+        button, input { margin-top: 10px; padding: 10px; width: 90%; font-size: 16px; display: block; }
+        .ad-box { background: white; color: black; padding: 10px; margin: 10px auto; width: 250px; cursor: pointer; border: 1px solid black; }
         #adsContainer { margin-top: 20px; }
     </style>
 </head>
@@ -18,14 +18,14 @@
     <h1>Ad System</h1>
 
     <div class="container">
-        <!-- Ad System -->
         <div class="panel">
             <h2>Ad Creator</h2>
-            <form id="adForm" onsubmit="createAd(event)">
-                <input type="text" id="adText" placeholder="Enter Ad Text" required>
-                <input type="url" id="adLink" placeholder="Enter Ad URL" required>
-                <button type="submit">Create Ad</button>
-            </form>
+
+            <!-- Ensure inputs are always visible -->
+            <input type="text" id="adText" placeholder="Enter Ad Text" required>
+            <input type="url" id="adLink" placeholder="Enter Ad URL" required>
+            
+            <button onclick="createAd()">Create Ad</button>
             <button onclick="spawnPopups()">Spawn Pop-up Ads</button>
         </div>
     </div>
@@ -33,25 +33,23 @@
     <div id="adsContainer"></div>
 
     <script>
-        // Make sure the inputs stay visible after refresh
-        window.onload = function() {
-            document.getElementById("adText").value = localStorage.getItem("adText") || "";
-            document.getElementById("adLink").value = localStorage.getItem("adLink") || "";
-        };
+        // Debug: Log when page loads
+        console.log("Page Loaded");
 
-        function createAd(event) {
-            event.preventDefault();  // Prevents page reload
+        // Force inputs to be visible even if something tries to hide them
+        setInterval(() => {
+            document.getElementById("adText").style.display = "block";
+            document.getElementById("adLink").style.display = "block";
+        }, 500);
 
+        function createAd() {
             let text = document.getElementById("adText").value;
             let link = document.getElementById("adLink").value;
+
             if (!text || !link) {
                 alert("Please enter ad text and URL.");
                 return;
             }
-
-            // Save inputs so they stay after refresh
-            localStorage.setItem("adText", text);
-            localStorage.setItem("adLink", link);
 
             let ad = document.createElement("div");
             ad.className = "ad-box";

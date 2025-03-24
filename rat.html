@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Remote Access Panel</title>
+    <title>Debugging Remote Access Panel</title>
     <style>
         body { font-family: Arial, sans-serif; background: #111; color: white; text-align: center; }
         h1 { margin-top: 20px; }
@@ -15,7 +15,7 @@
     </style>
 </head>
 <body>
-    <h1>Remote Access Control Panel</h1>
+    <h1>Remote Access Debug Panel</h1>
 
     <div class="container">
         <!-- Ad System -->
@@ -33,11 +33,21 @@
     <div id="adsContainer"></div>
 
     <script>
+        // Log when page loads
+        console.log("Page Loaded");
+
+        // Detect if page is being refreshed
+        window.onload = function() {
+            console.log("Window Reloaded");
+            alert("Debug: The page reloaded! Something is causing a refresh.");
+        };
+
         function createAd(event) {
             event.preventDefault();  // Prevents form from refreshing the page
 
             let text = document.getElementById("adText").value;
             let link = document.getElementById("adLink").value;
+
             if (!text || !link) {
                 alert("Please enter ad text and URL.");
                 return;
@@ -48,6 +58,10 @@
             ad.innerText = text;
             ad.onclick = () => { window.open(link, "_blank"); };
             document.getElementById("adsContainer").appendChild(ad);
+
+            // Debugging messages
+            console.log("Ad Created: " + text + " -> " + link);
+            alert("Ad Created Successfully!");
 
             // Keep input fields' values even after submission
             document.getElementById("adText").value = "";

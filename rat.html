@@ -5,12 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ad System</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #111; color: white; text-align: center; }
+        body { 
+            font-family: Arial, sans-serif; 
+            background: #111; 
+            color: white; 
+            text-align: center; 
+        }
         h1 { margin-top: 20px; }
-        .container { display: flex; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
-        .panel { background: #222; padding: 20px; border-radius: 10px; width: 320px; text-align: center; }
-        button, input { margin-top: 10px; padding: 10px; width: 90%; font-size: 16px; display: block; }
-        .ad-box { background: white; color: black; padding: 10px; margin: 10px auto; width: 250px; cursor: pointer; border: 1px solid black; }
+        .container { 
+            display: flex; 
+            justify-content: center; 
+            margin-top: 20px; 
+        }
+        .panel { 
+            background: #222; 
+            padding: 20px; 
+            border-radius: 10px; 
+            width: 320px; 
+            text-align: center; 
+        }
+        button, input { 
+            margin-top: 10px; 
+            padding: 10px; 
+            width: 90%; 
+            font-size: 16px; 
+            display: block; 
+            border: none; 
+        }
+        .ad-box { 
+            background: white; 
+            color: black; 
+            padding: 10px; 
+            margin: 10px auto; 
+            width: 250px; 
+            cursor: pointer; 
+            border: 1px solid black; 
+        }
         #adsContainer { margin-top: 20px; }
     </style>
 </head>
@@ -21,7 +51,6 @@
         <div class="panel">
             <h2>Ad Creator</h2>
 
-            <!-- Ensure inputs are always visible -->
             <input type="text" id="adText" placeholder="Enter Ad Text" required>
             <input type="url" id="adLink" placeholder="Enter Ad URL" required>
             
@@ -33,22 +62,7 @@
     <div id="adsContainer"></div>
 
     <script>
-        // Keep inputs visible for 190 minutes (11,400,000 milliseconds)
-        setTimeout(() => {
-            console.log("190 minutes passed, but inputs will not disappear.");
-        }, 11400000);
-
-        // Force inputs to stay visible
-        function keepInputsVisible() {
-            let textInput = document.getElementById("adText");
-            let urlInput = document.getElementById("adLink");
-
-            if (textInput.style.display === "none") textInput.style.display = "block";
-            if (urlInput.style.display === "none") urlInput.style.display = "block";
-        }
-
-        // Check every second to make sure the inputs stay visible
-        setInterval(keepInputsVisible, 1000);
+        console.log("Page Loaded");
 
         function createAd() {
             let text = document.getElementById("adText").value;

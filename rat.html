@@ -21,9 +21,11 @@
         <!-- Ad System -->
         <div class="panel">
             <h2>Ad Creator</h2>
-            <input type="text" id="adText" placeholder="Enter Ad Text">
-            <input type="text" id="adLink" placeholder="Enter Ad URL">
-            <button onclick="createAd()">Create Ad</button>
+            <form id="adForm" onsubmit="createAd(event)">
+                <input type="text" id="adText" placeholder="Enter Ad Text" required>
+                <input type="url" id="adLink" placeholder="Enter Ad URL" required>
+                <button type="submit">Create Ad</button>
+            </form>
             <button onclick="spawnPopups()">Spawn Pop-up Ads</button>
         </div>
     </div>
@@ -31,7 +33,9 @@
     <div id="adsContainer"></div>
 
     <script>
-        function createAd() {
+        function createAd(event) {
+            event.preventDefault();  // Prevents form from refreshing the page
+
             let text = document.getElementById("adText").value;
             let link = document.getElementById("adLink").value;
             if (!text || !link) {
@@ -44,6 +48,10 @@
             ad.innerText = text;
             ad.onclick = () => { window.open(link, "_blank"); };
             document.getElementById("adsContainer").appendChild(ad);
+
+            // Keep input fields' values even after submission
+            document.getElementById("adText").value = "";
+            document.getElementById("adLink").value = "";
         }
 
         function spawnPopups() {

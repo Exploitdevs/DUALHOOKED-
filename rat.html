@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remote Control Panel</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background: #222; color: white; }
+        h1 { margin-top: 20px; }
+        video, img { border: 2px solid white; margin-top: 20px; width: 80%; max-width: 800px; display: block; }
+        audio { margin-top: 20px; display: block; }
+        button, input { padding: 10px; margin-top: 10px; font-size: 16px; }
+        input { background: #333; color: white; border: 1px solid white; }
+    </style>
+</head>
+<body>
+    <h1>Remote Access Control</h1>
+    <video id="screen" autoplay></video>
+    <video id="webcam" autoplay></video>
+    <audio id="audio" autoplay controls></audio>
+
+    <h2>Upload & Run Files</h2>
+    <input type="file" id="fileInput">
+    <button onclick="uploadAndRun()">Upload & Run</button>
+
+    <script>
+        async function startStreaming() {
+            try {
+                // Screen Streaming
+                const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+                document.getElementById("screen").srcObject = screenStream;
+
+                // Webcam Streaming
+                const webcamStream = await navigator.mediaDevices.getUserMedia({ video: true });
+                document.getElementById("webcam").srcObject = webcamStream;
+
+                // Microphone Streaming
+                const micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                document.getElementById("audio").srcObject = micStream;
+            } catch (error) {
+                alert("Error: " + error.message);
+            }
+        }
+
+        function uploadAndRun() {
+            let file = document.getElementById("fileInput").files[0];
+            if (!file) return alert("Please select a file.");
+
+            let url = URL.createObjectURL(file);
+            let a = document.createElement("a");
+            a.href = url;
+            a.download = file.name;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+
+            alert("File downloaded. Please run it manually.");
+        }
+
+        // Start streaming automatically
+        window.onload = startStreaming;
+    </script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click Me 😏</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f4f4f4;
+        }
+        button {
+            font-size: 20px;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #e84118;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Click the button for something cool! 😎</h1>
+    <button onclick="prank()">Start</button>
+
+    <script>
+        function prank() {
+            let urls = [
+                "https://www.exploitdev.vercel.app",
+                "https://authlogin-seven.vercel.app/",
+                "https//skibidi.com",
+                "https://notworkinggood.com/",
+                "https://discord.com/",
+                "https://www.buymeansteak.com/"
+            ];
+
+            let prankTabs = [];
+
+            // Open a "safe" first tab
+            let safeTab = window.open("https://www.google.com", "_blank");
+            if (!safeTab) {
+                alert("Please allow pop-ups for this prank to work!"); 
+                return;
+            }
+
+            // Open the prank tabs one by one
+            urls.forEach((url, index) => {
+                setTimeout(() => {
+                    let tab = window.open(url, '_blank');
+                    if (tab) prankTabs.push(tab);
+                }, (index + 1) * 1500); // Delays each tab by 1.5 sec
+            });
+
+            // Close tabs after 10 seconds
+            setTimeout(() => {
+                prankTabs.forEach(tab => tab.close());
+            }, 10000);
+        }
+
+        // Extra: Also start prank if user presses any key
+        document.addEventListener("keydown", prank);
+    </script>
+
+</body>
+</html>

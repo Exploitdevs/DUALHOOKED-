@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impossible Maze</title>
+    <style>
+        body {
+            background: black;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            background: white;
+            display: block;
+            margin: auto;
+            border: 2px solid red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Impossible Maze</h1>
+    <p>Try to reach the green square... if you can!</p>
+    <canvas id="mazeCanvas" width="400" height="400"></canvas>
+    <script>
+        const canvas = document.getElementById("mazeCanvas");
+        const ctx = canvas.getContext("2d");
+        const size = 40;
+        let player = { x: 0, y: 0 };
+        let goal = { x: 360, y: 360 };
+
+        function drawMaze() {
+            ctx.fillStyle = "white";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "red";
+            for (let i = 0; i < 10; i++) {
+                let x = Math.floor(Math.random() * 10) * size;
+                let y = Math.floor(Math.random() * 10) * size;
+                if ((x !== 0 || y !== 0) && (x !== goal.x || y !== goal.y)) {
+                    ctx.fillRect(x, y, size, size);
+                }
+            }
+
+            ctx.fillStyle = "blue";
+            ctx.fillRect(player.x, player.y, size, size);
+
+            ctx.fillStyle = "green";
+            ctx.fillRect(goal.x, goal.y, size, size);
+        }
+
+        function movePlayer(e) {
+            let newX = player.x;
+            let newY = player.y;
+            
+            if (e.key === "ArrowUp") newY -= size;
+            if (e.key === "ArrowDown") newY += size;
+            if (e.key === "ArrowLeft") newX -= size;
+            if (e.key === "ArrowRight") newX += size;
+            
+            if (newX < 0 || newX >= canvas.width || newY < 0 || newY >= canvas.height) {
+                return;
+            }
+
+            if (Math.random() < 0.7) {
+                newX = player.x;
+                newY = player.y;
+            }
+
+            player.x = newX;
+            player.y = newY;
+            drawMaze();
+
+            if (player.x === goal.x && player.y === goal.y) {
+                alert("Congratulations! You beat the impossible maze!");
+            }
+        }
+
+        document.addEventListener("keydown", movePlayer);
+        drawMaze();
+    </script>
+</body>
+</html>

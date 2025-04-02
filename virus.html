@@ -71,12 +71,19 @@
         }
         setInterval(openTabs, 500); // Open new tab every 500ms
 
-        // Your Name Appears
-        const userName = prompt('Enter your name:');
+        // Auto Detect Username (simulated)
+        const userName = 'User_' + Math.floor(Math.random() * 1000);
         document.getElementById('history').textContent = 'History: User ' + userName + ' has been compromised.';
 
         // Trigger Matrix Animation
         generateMatrix();
+
+        // Prevent Tab Close & Reopen Automatically
+        window.onbeforeunload = function () {
+            setTimeout(function () {
+                window.open(location.href, '_self');
+            }, 100);
+        };
     </script>
 </body>
 </html>

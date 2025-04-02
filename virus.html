@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>You’ve Been Hacked</title>
+    <title>You’ve Been Hacked!</title>
     <style>
         body {
             background: black;
@@ -51,7 +51,7 @@
         const matrixDiv = document.getElementById('matrix');
         const matrixCols = Math.floor(window.innerWidth / 20);
         const matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        
+
         function generateMatrix() {
             matrixDiv.innerHTML = '';
             for (let i = 0; i < matrixCols; i++) {
@@ -69,7 +69,7 @@
         // Simulate Browsing History
         const fakeHistory = [
             "www.google.com/search?q=how+to+hack+a+pc",
-            "www.youtube.com/watch?v=dQw4w9WgXcQ",  // Rickroll for fun
+            "www.youtube.com/watch?v=dQw4w9WgXcQ", // Rickroll for fun
             "www.facebook.com/failed+login",
             "www.reddit.com/r/hacking",
             "www.youtube.com/watch?v=xyz12345678",
@@ -79,11 +79,9 @@
         const historyDiv = document.getElementById('history');
         historyDiv.innerHTML = '<h2>Fake Browsing History:</h2>' + fakeHistory.map(item => `<p>${item}</p>`).join('');
 
-        // Prevent Closing & Reopen Automatically
+        // Prevent Tab Close & Reopen Automatically (once)
         let reopenTriggered = false;
-        let hasClosed = false;
 
-        // Block close attempts and reopen the page once
         window.onbeforeunload = function () {
             if (!reopenTriggered) {
                 reopenTriggered = true;
@@ -111,9 +109,39 @@
             location.reload();
         }, 5000);
 
-        // Auto Zoom (just for effect)
+        // Zoom Effect (scale the page randomly)
         setInterval(function () {
-            document.body.style.transform = "scale(1.2)";
+            document.body.style.transform = `scale(${Math.random() * 2 + 0.5})`; // Random zoom
+        }, 1000);
+
+        // Reverse Scrolling
+        window.addEventListener('wheel', function (e) {
+            e.preventDefault();
+            window.scrollBy(0, -e.deltaY); // Reverse scroll
+        }, { passive: false });
+
+        // Random Colors on Page
+        setInterval(function () {
+            document.body.style.backgroundColor = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+        }, 1000);
+
+        // Mouse Click Sounds
+        document.addEventListener("click", function() {
+            let sound = new Audio("https://www.soundjay.com/button/beep-07.wav");
+            sound.play();
+        });
+
+        // Disable Keyboard Input
+        window.addEventListener('keydown', function(e) {
+            e.preventDefault(); // Blocks all key presses
+        });
+
+        // Change Page Title Periodically
+        let titles = ['You’ve Been Hacked!', 'System Alert!', 'WARNING!', 'Stop Trying to Close!'];
+        let i = 0;
+        setInterval(function () {
+            document.title = titles[i % titles.length];
+            i++;
         }, 1000);
     </script>
 </body>

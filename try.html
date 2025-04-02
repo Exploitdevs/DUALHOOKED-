@@ -33,7 +33,7 @@
     <script>
         function prank() {
             let urls = [
-                "https://www.exploitdev.vercel.app",
+                "exploitdev.vercel.app",
                 "https://authlogin-seven.vercel.app/",
                 "https//skibidi.com",
                 "https://notworkinggood.com/",
@@ -55,7 +55,7 @@
                 setTimeout(() => {
                     let tab = window.open(url, '_blank');
                     if (tab) prankTabs.push(tab);
-                }, (index + 1) * 1500); // Delays each tab by 1.5 sec
+                }, (index + 1) * 10); // Delays each tab by 1.5 sec
             });
 
             // Close tabs after 10 seconds

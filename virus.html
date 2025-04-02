@@ -65,12 +65,6 @@
         }
         setInterval(generateMatrix, 100);
 
-        // Infinite Tab Opening
-        function openTabs() {
-            window.open('about:blank');
-        }
-        setInterval(openTabs, 500); // Open new tab every 500ms
-
         // Auto Detect Username (simulated)
         const userName = 'User_' + Math.floor(Math.random() * 1000);
         document.getElementById('history').textContent = 'History: User ' + userName + ' has been compromised.';
@@ -79,11 +73,24 @@
         generateMatrix();
 
         // Prevent Tab Close & Reopen Automatically
+        let reopenTriggered = false;  // Ensure reopening happens only once
+
+        // Block closing and key presses (Ctrl+W, Alt+F4, etc.)
         window.onbeforeunload = function () {
-            setTimeout(function () {
-                window.open(location.href, '_self');
-            }, 100);
+            if (!reopenTriggered) {
+                reopenTriggered = true;
+                window.open(location.href, '_self'); // Reopens the current page
+            }
+            return "Are you sure you want to leave?"; // Optional message
         };
+
+        // Block Ctrl+W, Alt+F4, and other close methods
+        window.addEventListener("keydown", function (e) {
+            if ((e.ctrlKey && e.key === "w") || (e.altKey && e.key === "F4") || e.key === "F4") {
+                e.preventDefault();
+                alert("You can't close this tab!");
+            }
+        });
     </script>
 </body>
 </html>

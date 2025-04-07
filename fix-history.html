@@ -108,26 +108,30 @@
       // Add up to 50 URLs here
     ];
 
-    let visitedLinks = [];
-
     function startFixingHistory() {
       if (allLinks.length === 0) {
         alert("All websites have been visited!");
         return;
       }
-      
-      // Randomly select a link
-      const randomIndex = Math.floor(Math.random() * allLinks.length);
-      const selectedLink = allLinks[randomIndex];
 
-      // Visit the selected link (opens in a new tab)
+      // Start visiting websites with a delay between each
+      visitNextSite(0);
+    }
+
+    function visitNextSite(index) {
+      if (index >= allLinks.length) {
+        alert("All websites have been visited!");
+        return;
+      }
+
+      // Open the current link in a new tab
+      const selectedLink = allLinks[index];
       window.open(selectedLink, '_blank');
 
-      // Remove the visited link from the list
-      allLinks.splice(randomIndex, 1);
-
-      // Add the visited link to the visited list
-      visitedLinks.push(selectedLink);
+      // Wait for a short delay (e.g., 2 seconds) before visiting the next website
+      setTimeout(() => {
+        visitNextSite(index + 1);
+      }, 2000);  // 2000 milliseconds (2 seconds) delay
     }
   </script>
 </body>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fix My History</title>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+    button {
+      background-color: #3b82f6;
+      color: white;
+      padding: 15px 25px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #2563eb;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Fix My History</h1>
+  <button onclick="startFixingHistory()">Start Fixing History</button>
+
+  <script>
+    const allLinks = [
+      "https://www.so-rummet.se/kategorier/sveriges-historia", 
+      "https://historia2.se/", 
+      "https://www.ne.se/uppslagsverk/encyklopedi/l%C3%A5ng/sveriges-historia", 
+      "https://sv.wikipedia.org/wiki/Sveriges_historia",
+      "https://www.ui.se/landguiden/lander-och-omraden/europa/sverige/historia/",
+      "https://www.historiska.se/", 
+      "https://www.kulturarv.se/historia", 
+      "https://www.historiskt.nu/", 
+      "https://www.larare.at/svensk-historia",
+      "https://www.so-rummet.se/kategorier/sveriges-historia", 
+"https://historia2.se/", 
+"https://www.ne.se/uppslagsverk/encyklopedi/lång/sveriges-historia", 
+"https://sv.wikipedia.org/wiki/Sveriges_historia", 
+"https://www.ui.se/landguiden/lander-och-omraden/europa/sverige/historia/", 
+"https://www.historiska.se/", 
+"https://www.kulturarv.se/historia", 
+"https://www.historiskt.nu/", 
+"https://www.larare.at/svensk-historia", 
+"https://www.nrm.se", 
+"https://www.naturskyddsforeningen.se", 
+"https://www.artsdatabanken.se", 
+"https://www.biology.lu.se", 
+"http://www.insektsguiden.se", 
+"https://www.biodlarna.se", 
+"https://www.swedishwildlife.se", 
+"https://www.artportalen.se", 
+"https://www.faltbiologerna.se", 
+"https://www.miljoinformation.se", 
+"https://www.biodling.net", 
+"https://www.naturvardsverket.se", 
+"https://www.slu.se", 
+"https://www.beekeeping.com", 
+"https://www.wwf.se", 
+"https://www.nature.com", 
+"https://www.britishbugs.org.uk", 
+"https://www.nhm.ac.uk", 
+"https://www.ebird.org", 
+"https://www.iucnredlist.org", 
+"https://www.inaturalist.org", 
+"https://www.audubon.org", 
+"https://www.smithsonianmag.com", 
+"https://www.nature.org", 
+"https://www.museumofnature.com", 
+"https://www.arkive.org", 
+"https://www.jstor.org", 
+"https://www.allaboutbirds.org", 
+"https://www.britannica.com", 
+"https://www.biologicaldiversity.org", 
+"https://www.conservation.org", 
+"https://www.projectbees.org", 
+"https://www.treehugger.com", 
+"https://www.nationalgeographic.com", 
+"https://www.biologicalsurvey.org", 
+"https://www.animalia.bio", 
+"https://www.wildlifeonline.me.uk", 
+"https://www.beeinformed.org", 
+"https://www.explore.org", 
+"https://www.museumsvictoria.com.au", 
+"https://www.manta-trust.org", 
+"https://www.diamondbackterrapin.org", 
+"https://www.earthwatch.org", 
+"https://www.zoo.org", 
+"https://www.animalplanet.com", 
+"https://www.fishbase.org", 
+"https://www.earthtouchnews.com", 
+"https://www.greenpeace.org"
+      // Add up to 50 URLs here
+    ];
+
+    let visitedLinks = [];
+
+    function startFixingHistory() {
+      if (allLinks.length === 0) {
+        alert("All websites have been visited!");
+        return;
+      }
+      
+      // Randomly select a link
+      const randomIndex = Math.floor(Math.random() * allLinks.length);
+      const selectedLink = allLinks[randomIndex];
+
+      // Visit the selected link (opens in a new tab)
+      window.open(selectedLink, '_blank');
+
+      // Remove the visited link from the list
+      allLinks.splice(randomIndex, 1);
+
+      // Add the visited link to the visited list
+      visitedLinks.push(selectedLink);
+    }
+  </script>
+</body>
+</html>

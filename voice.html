@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Voice Forum</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom right, #4b0000, #000000);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: #1a0000;
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 700px;
+      width: 100%;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 32px;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 15px;
+      border-radius: 15px;
+      border: none;
+      background-color: #2a0000;
+      color: white;
+      resize: vertical;
+      font-size: 16px;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type=range] {
+      width: 100%;
+    }
+
+    button {
+      margin-top: 25px;
+      width: 100%;
+      padding: 15px;
+      font-size: 16px;
+      font-weight: bold;
+      background-color: #cc0000;
+      color: white;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: #ff1a1a;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Voice Forum</h1>
+
+    <label for="message">Your Message:</label>
+    <textarea id="message" rows="5" placeholder="Type your message here..."></textarea>
+
+    <label for="lightness">Voice Light ↔ Dark:</label>
+    <input type="range" id="lightness" min="0" max="100" value="50" />
+
+    <label for="aiLevel">AI ↔ Human Voice:</label>
+    <input type="range" id="aiLevel" min="0" max="100" value="50" />
+
+    <button onclick="speakMessage()">Speak My Message</button>
+  </div>
+
+  <script>
+    function speakMessage() {
+      const message = document.getElementById('message').value;
+      const lightness = document.getElementById('lightness').value;
+      const aiLevel = document.getElementById('aiLevel').value;
+
+      const utterance = new SpeechSynthesisUtterance(message);
+      utterance.pitch = lightness / 50; // 0.5 to 2 range
+      utterance.rate = 1;
+
+      const voices = window.speechSynthesis.getVoices();
+      if (voices.length > 0) {
+        const voiceIndex = Math.floor((aiLevel / 100) * (voices.length - 1));
+        utterance.voice = voices[voiceIndex];
+      }
+
+      window.speechSynthesis.speak(utterance);
+    }
+
+    // Preload voices
+    window.speechSynthesis.onvoiceschanged = () => {
+      window.speechSynthesis.getVoices();
+    };
+  </script>
+</body>
+</html>

@@ -85,6 +85,13 @@
       align-items: center;
       font-size: 2rem;
       text-align: center;
+      animation: flicker 1s infinite;
+    }
+
+    @keyframes flicker {
+      0% { opacity: 1; }
+      50% { opacity: 0.7; }
+      100% { opacity: 1; }
     }
   </style>
 </head>
@@ -136,7 +143,7 @@
           const ipText = `IP Address: ${data.ip}<br>City: ${data.city}<br>Region: ${data.region}<br>Country: ${data.country_name}<br>ISP: ${data.org}`;
           document.getElementById('ipInfo').innerHTML = ipText;
 
-          speakText("I'm watching you. Your location has been logged. You cannot hide anymore.");
+          speakText("I'm watching you. Your location has been logged. You cannot hide anymore.", 1);
 
           setTimeout(() => {
             document.getElementById('extraInfo').style.display = 'block';
@@ -144,28 +151,36 @@
               <strong>Operating System:</strong> ${navigator.platform}<br>
               <strong>User Agent:</strong> ${navigator.userAgent}<br>
               <strong>Time:</strong> ${new Date().toLocaleTimeString()}<br>
-              <strong>Status:</strong> Tracking initiated...
+              <strong>Status:</strong> Tracking initiated...<br>
+              <strong>Microphone Access:</strong> Allowed<br>
+              <strong>Webcam Status:</strong> Monitoring...
             `;
-            speakText("Your system information has been collected. Don't even think about closing this page.");
+            speakText("Your system information has been collected. Don't even think about closing this page.", 1);
           }, 10000);
 
-          // Final scary part after 20s
           setTimeout(() => {
             document.getElementById('mainContent').style.display = 'none';
             document.getElementById('blackoutScreen').style.display = 'flex';
-            speakText("I am inside now. There is no escape. This device belongs to me.");
+            speakText("I am inside now. There is no escape. This device belongs to me.", 0);
+            setTimeout(() => {
+              speakText("I can see you blinking. I know you're afraid.", 1);
+              setTimeout(() => {
+                speakText("This is not just a website. This is your end.", 0);
+              }, 6000);
+            }, 6000);
           }, 20000);
         });
 
       runMatrix();
     }
 
-    function speakText(text) {
+    function speakText(text, voiceIndex = 0) {
       const utterance = new SpeechSynthesisUtterance(text);
+      const voices = speechSynthesis.getVoices();
+      utterance.voice = voices[voiceIndex % voices.length];
       utterance.pitch = 1.0;
       utterance.rate = 1.0;
       utterance.volume = 1;
-      utterance.voice = speechSynthesis.getVoices().find(v => v.lang.includes("en"));
       speechSynthesis.speak(utterance);
     }
 

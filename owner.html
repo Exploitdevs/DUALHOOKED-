@@ -70,6 +70,22 @@
       margin-top: 2rem;
       font-size: 1.1rem;
     }
+
+    #blackoutScreen {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: black;
+      color: red;
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -102,6 +118,13 @@
     </div>
   </div>
 
+  <div id="blackoutScreen">
+    <div>
+      <p>SYSTEM BREACH COMPLETE</p>
+      <p>I AM INSIDE NOW</p>
+    </div>
+  </div>
+
   <script>
     function startSigma() {
       document.getElementById('consent').style.display = 'none';
@@ -113,10 +136,8 @@
           const ipText = `IP Address: ${data.ip}<br>City: ${data.city}<br>Region: ${data.region}<br>Country: ${data.country_name}<br>ISP: ${data.org}`;
           document.getElementById('ipInfo').innerHTML = ipText;
 
-          // Speak initial message
           speakText("I'm watching you. Your location has been logged. You cannot hide anymore.");
 
-          // After 10s, reveal more data and speak again
           setTimeout(() => {
             document.getElementById('extraInfo').style.display = 'block';
             document.getElementById('extraInfo').innerHTML = `
@@ -128,6 +149,12 @@
             speakText("Your system information has been collected. Don't even think about closing this page.");
           }, 10000);
 
+          // Final scary part after 20s
+          setTimeout(() => {
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('blackoutScreen').style.display = 'flex';
+            speakText("I am inside now. There is no escape. This device belongs to me.");
+          }, 20000);
         });
 
       runMatrix();
@@ -135,7 +162,7 @@
 
     function speakText(text) {
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.pitch = 1.0; // More human-like
+      utterance.pitch = 1.0;
       utterance.rate = 1.0;
       utterance.volume = 1;
       utterance.voice = speechSynthesis.getVoices().find(v => v.lang.includes("en"));

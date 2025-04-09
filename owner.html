@@ -64,6 +64,12 @@
       background: black;
       overflow: hidden;
     }
+
+    #extraInfo {
+      display: none;
+      margin-top: 2rem;
+      font-size: 1.1rem;
+    }
   </style>
 </head>
 <body>
@@ -91,6 +97,7 @@
         <h3>Sigma Terminal</h3>
         <p>You are being watched. Forever. 🤫</p>
         <p>Skibidi breach in progress...</p>
+        <div id="extraInfo"></div>
       </div>
     </div>
   </div>
@@ -100,28 +107,38 @@
       document.getElementById('consent').style.display = 'none';
       document.getElementById('mainContent').style.display = 'block';
 
-      // Fetch IP and display info
       fetch('https://ipapi.co/json/')
         .then(res => res.json())
         .then(data => {
           const ipText = `IP Address: ${data.ip}<br>City: ${data.city}<br>Region: ${data.region}<br>Country: ${data.country_name}<br>ISP: ${data.org}`;
           document.getElementById('ipInfo').innerHTML = ipText;
+
+          // Speak initial message
+          speakText("I'm watching you. Your location has been logged. You cannot hide anymore.");
+
+          // After 10s, reveal more data and speak again
+          setTimeout(() => {
+            document.getElementById('extraInfo').style.display = 'block';
+            document.getElementById('extraInfo').innerHTML = `
+              <strong>Operating System:</strong> ${navigator.platform}<br>
+              <strong>User Agent:</strong> ${navigator.userAgent}<br>
+              <strong>Time:</strong> ${new Date().toLocaleTimeString()}<br>
+              <strong>Status:</strong> Tracking initiated...
+            `;
+            speakText("Your system information has been collected. Don't even think about closing this page.");
+          }, 10000);
+
         });
 
-      // Delay and play creepy voice
-      setTimeout(() => {
-        speakText("I'm watching you. Your location has been logged. You cannot hide anymore.");
-      }, 3000);
-
-      // Matrix effect
       runMatrix();
     }
 
     function speakText(text) {
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.pitch = 0.6;
-      utterance.rate = 0.9;
+      utterance.pitch = 1.0; // More human-like
+      utterance.rate = 1.0;
       utterance.volume = 1;
+      utterance.voice = speechSynthesis.getVoices().find(v => v.lang.includes("en"));
       speechSynthesis.speak(utterance);
     }
 
